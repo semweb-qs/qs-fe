@@ -17,7 +17,6 @@
     "cypress:headless": "cypress run",
     "e2e": "start-server-and-test dev http://localhost:3000 cypress",
     "e2e:headless": "start-server-and-test dev http://localhost:3000 cypress:headless",
-    "prepare": "husky install"
   },
   "dependencies": {
     "next": "^13.0.0",
