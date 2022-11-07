@@ -1,4 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
+
 @tailwind base;
+
+@font-face {
+  font-family: poor-story;
+  src: url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
+}
+
+body {
+  font-family: "Poor Story", "Comic Sans MS", sans-serif;
+}
 
 a {
   @apply text-blue-700;
