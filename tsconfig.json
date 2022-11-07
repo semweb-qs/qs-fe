@@ -6,6 +6,7 @@
       "esnext"
     ],
     "module": "esnext",
+    "noUnusedLocals": false,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "preserveConstEnums": true,
