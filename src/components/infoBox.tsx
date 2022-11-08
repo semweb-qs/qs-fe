@@ -24,26 +24,39 @@ const images = [
 export default function BoxComponent() {
   return (
     <Card>
-      <CardHeader floated={false} variant="gradient" color="white">
-        <div className="grid grid-flow-row-dense grid-cols-2 grid-rows-2">
+      <CardHeader className="m-0" floated={false} variant="gradient" color="white">
+        <div className="flex-fit flex basis-2 overflow-x-scroll gap-2">
           {images.map((el, i) => {
             return (
               <img
                 src={el.src}
                 alt={el.alt}
-                className="h-48 w-full object-cover object-top"
+                className="h-48 w-auto object-cover object-top"
                 key={i}
               ></img>
             );
           })}
         </div>
+
+        <div className="font-bold text-4xl mx-5">
+          Massachusets Institute of Technology
+        </div>
+        <div className="mx-5 mb-2">Universitas</div>
       </CardHeader>
       <CardBody>
-        <div>asu</div>
+        <table className="table-auto w-full">
+          <tbody>
+            <tr>
+              <td className="w-1/5">
+                <div className="w-auto font-bold">Nama</div>
+              </td>
+              <td>
+                <div>Telur</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </CardBody>
-      <CardFooter className="pt-0">
-        <Typography>Don't have an account?</Typography>
-      </CardFooter>
     </Card>
   );
 }
