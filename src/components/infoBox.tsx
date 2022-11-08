@@ -5,20 +5,57 @@ import {
   CardHeader,
   Typography,
 } from '@material-tailwind/react';
+import { Gallery } from 'react-grid-gallery';
 
+const images = [
+  {
+    src: 'https://c2.staticflickr.com/9/8817/28973449265_07e3aa5d2e_b.jpg',
+    width: 320,
+    height: 174,
+    caption: 'After Rain (Jeshu John - designerspics.com)',
+  },
+  {
+    src: 'https://static.wikia.nocookie.net/gensin-impact/images/e/e1/Character_Venti_Game.png',
+  },
+  {
+    src: 'https://c2.staticflickr.com/9/8356/28897120681_3b2c0f43e0_b.jpg',
+    width: 320,
+    height: 212,
+    // tags: [
+    //   { value: 'Ocean', title: 'Ocean' },
+    //   { value: 'People', title: 'People' },
+    // ],
+    alt: 'Boats (Jeshu John - designerspics.com)',
+  },
+
+  {
+    src: 'https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_b.jpg',
+    width: 320,
+    height: 212,
+  },
+];
 export default function BoxComponent() {
   return (
     <Card>
-      <CardHeader floated={false} variant="gradient" color="blue">
-        <img src="https://www.material-tailwind.com/_next/image?url=%2Fimg%2Fteam-3.jpg&w=3840&q=100" alt="profile-picture" />
+      <CardHeader floated={false} variant="gradient" color="white">
+        <div className="grid grid-flow-row-dense grid-cols-2 grid-rows-2">
+          {images.map((el, i) => {
+            return (
+              <img
+                src={el.src}
+                alt={el.alt}
+                className="h-48 w-full object-cover object-top"
+                key={i}
+              ></img>
+            );
+          })}
+        </div>
       </CardHeader>
       <CardBody>
         <div>asu</div>
       </CardBody>
       <CardFooter className="pt-0">
-        <Typography>
-          Don't have an account?
-        </Typography>
+        <Typography>Don't have an account?</Typography>
       </CardFooter>
     </Card>
   );
