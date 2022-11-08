@@ -17,6 +17,7 @@
     "e2e:headless": "start-server-and-test dev http://localhost:3000 cypress:headless"
   },
   "dependencies": {
+    "@material-tailwind/react": "^1.2.4",
     "next": "^13.0.0",
     "next-seo": "^5.8.0",
     "react": "^18.2.0",

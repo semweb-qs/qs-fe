@@ -1,5 +1,7 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+/** @type {(tailwindConfig: object) => object} */
+const withMT = require('@material-tailwind/react/utils/withMT');
+
+module.exports = withMT({
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     fontSize: {
@@ -42,4 +44,4 @@ module.exports = {
     },
   },
   plugins: [],
-};
+});
