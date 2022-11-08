@@ -24,7 +24,12 @@ const images = [
 export default function BoxComponent() {
   return (
     <Card>
-      <CardHeader className="m-0" floated={false} variant="gradient" color="white">
+      <CardHeader
+        className="m-0"
+        floated={false}
+        variant="gradient"
+        color="white"
+      >
         <div className="flex-fit flex basis-2 overflow-x-scroll gap-2">
           {images.map((el, i) => {
             return (
@@ -52,6 +57,14 @@ export default function BoxComponent() {
               </td>
               <td>
                 <div>Telur</div>
+              </td>
+            </tr>
+            <tr>
+              <td className="w-1/5">
+                <div className="w-auto font-bold">Nama</div>
+              </td>
+              <td>
+                <a href="https://hocky.id">ayam</a>
               </td>
             </tr>
           </tbody>
