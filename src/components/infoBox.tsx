@@ -48,7 +48,9 @@ export default function BoxComponent({ images, attributes, accordionsData }) {
         </div>
         <div className="mx-5 mb-2">Universitas</div>
       </CardHeader>
+
       <CardBody>
+        <div className="font-bold text-3xl text-purple-400">📚 Basic Info</div>
         <table className="table-auto w-full">
           <tbody>
             {attributes.map((el, i) => {
@@ -65,19 +67,24 @@ export default function BoxComponent({ images, attributes, accordionsData }) {
             })}
           </tbody>
         </table>
+        <hr className="my-3" />
         <div>
+          <div className="font-bold text-3xl text-purple-400">
+            📚 Extra Info
+          </div>
           {accordionsData.map((el, i) => {
             return (
               <Accordion key={i} open={openStates[i]}>
                 <AccordionHeader
+                  className="py-1"
                   onClick={() => {
                     toggleAccordion(i);
                   }}
                 >
-                  <div className="text-2xl force-font">{el.header}</div>
+                  <div className="force-font text-2xl">{el.header}</div>
                 </AccordionHeader>
-                <AccordionBody>
-                  <div className="text-xl force-font">{el.content}</div>
+                <AccordionBody className="py-2">
+                  <div className="force-font text-xl">{el.content}</div>
                 </AccordionBody>
               </Accordion>
             );
