@@ -12,6 +12,10 @@ body {
   background-color: #ffffff;
 }
 
+.force-font {
+  font-family: "Poor Story", "Comic Sans MS", sans-serif;
+}
+
 a {
   @apply text-blue-700;
 }

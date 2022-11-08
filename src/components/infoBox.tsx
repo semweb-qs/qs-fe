@@ -1,27 +1,27 @@
 import {
+  Accordion,
+  AccordionBody,
+  AccordionHeader,
   Card,
   CardBody,
   CardFooter,
   CardHeader,
   Typography,
 } from '@material-tailwind/react';
+import { useState } from 'react';
 
-const images = [
-  {
-    src: 'https://c2.staticflickr.com/9/8817/28973449265_07e3aa5d2e_b.jpg',
-  },
-  {
-    src: 'https://static.wikia.nocookie.net/gensin-impact/images/e/e1/Character_Venti_Game.png',
-  },
-  {
-    src: 'https://c2.staticflickr.com/9/8356/28897120681_3b2c0f43e0_b.jpg',
-    alt: 'Boats (Jeshu John - designerspics.com)',
-  },
-  {
-    src: 'https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_b.jpg',
-  },
-];
-export default function BoxComponent() {
+export default function BoxComponent({ images, attributes, accordionsData }) {
+  const [openStates, setOpenStates] = useState<boolean[]>(
+    // Array(accordionsData.length).fill(false)
+    Array(accordionsData.length).fill(false)
+  );
+  const toggleAccordion = (index) => {
+    setOpenStates((curState) => {
+      const tmp = [...curState];
+      tmp[index] = !tmp[index];
+      return tmp;
+    });
+  };
   return (
     <Card>
       <CardHeader
@@ -51,24 +51,38 @@ export default function BoxComponent() {
       <CardBody>
         <table className="table-auto w-full">
           <tbody>
-            <tr>
-              <td className="w-1/5">
-                <div className="w-auto font-bold">Nama</div>
-              </td>
-              <td>
-                <div>Telur</div>
-              </td>
-            </tr>
-            <tr>
-              <td className="w-1/5">
-                <div className="w-auto font-bold">Nama</div>
-              </td>
-              <td>
-                <a href="https://hocky.id">ayam</a>
-              </td>
-            </tr>
+            {attributes.map((el, i) => {
+              return (
+                <tr key={i}>
+                  <td className="w-1/5">
+                    <div className="w-auto font-bold">{el[0]}</div>
+                  </td>
+                  <td>
+                    <div>{el[1]}</div>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
+        <div>
+          {accordionsData.map((el, i) => {
+            return (
+              <Accordion key={i} open={openStates[i]}>
+                <AccordionHeader
+                  onClick={() => {
+                    toggleAccordion(i);
+                  }}
+                >
+                  <div className="text-2xl force-font">{el.header}</div>
+                </AccordionHeader>
+                <AccordionBody>
+                  <div className="text-xl force-font">{el.content}</div>
+                </AccordionBody>
+              </Accordion>
+            );
+          })}
+        </div>
       </CardBody>
     </Card>
   );
