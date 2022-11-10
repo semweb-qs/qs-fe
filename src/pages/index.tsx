@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import BoxComponent from '@/components/infoBox';
 import SearchComponent from '@/components/searchBar';
+import SearchResultComponent from '@/components/SearchResultComponent';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
 
@@ -22,7 +23,11 @@ const images = [
   },
 ];
 
-const attributes = [['ayam', 'telur']];
+const attributes = [
+  ['Nama', 'Massachusets Institute of Technology'],
+  ['Lokasi', 'Depok'],
+  ['Negara', 'Indonesia'],
+];
 
 const accordions = [
   { header: 'Ini kepalanya', content: 'Ini Kontennya' },
@@ -46,8 +51,44 @@ const Index = () => {
         <SearchComponent></SearchComponent>
       </div>
 
-      <div className="flex flex-col items-center content-center justify-center">
-        <BoxComponent images={images} attributes={attributes} accordionsData={accordions}></BoxComponent>
+      <div className="flex flex-col-reverse md:flex-row ">
+        <div
+          id="search-result"
+          className="flex flex-col gap-7 w-[150vw] m-2 px-3"
+        >
+          <SearchResultComponent
+            title="Asu"
+            desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed elementum nisl et orci feugiat semper. Aliquam erat volutpat. Maecenas semper ipsum a dolor interdum, a accumsan risus malesuada. Cras eu bibendum massa. Nunc suscipit quam vel est condimentum, ut posuere ante ultricies. Curabitur porttitor, augue a volutpat dictum, metus dolor commodo odio, ultricies viverra lorem risus id nisi. Aenean mollis, libero et dapibus vulputate, ligula metus facilisis urna, ac dignissim justo eros id ex. Donec interdum molestie velit nec aliquam. Ut tempor tincidunt luctus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec aliquet augue mauris, sed tempus tellus viverra vitae. Nunc luctus in ante id bibendum. Nunc vehicula dui et ornare volutpat. Ut gravida venenatis odio sit amet consectetur. Praesent tempus varius gravida. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+            url="https://example.org/vocab/asu"
+          ></SearchResultComponent>
+          <SearchResultComponent
+            title="Asu"
+            desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed elementum nisl et orci feugiat semper. Aliquam erat volutpat. Maecenas semper ipsum a dolor interdum, a accumsan risus malesuada. Cras eu bibendum massa. Nunc suscipit quam vel est condimentum, ut posuere ante ultricies. Curabitur porttitor, augue a volutpat dictum, metus dolor commodo odio, ultricies viverra lorem risus id nisi. Aenean mollis, libero et dapibus vulputate, ligula metus facilisis urna, ac dignissim justo eros id ex. Donec interdum molestie velit nec aliquam. Ut tempor tincidunt luctus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec aliquet augue mauris, sed tempus tellus viverra vitae. Nunc luctus in ante id bibendum. Nunc vehicula dui et ornare volutpat. Ut gravida venenatis odio sit amet consectetur. Praesent tempus varius gravida. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+            url="https://example.org/vocab/asu"
+          ></SearchResultComponent>
+          <SearchResultComponent
+            title="Asu"
+            desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed elementum nisl et orci feugiat semper. Aliquam erat volutpat. Maecenas semper ipsum a dolor interdum, a accumsan risus malesuada. Cras eu bibendum massa. Nunc suscipit quam vel est condimentum, ut posuere ante ultricies. Curabitur porttitor, augue a volutpat dictum, metus dolor commodo odio, ultricies viverra lorem risus id nisi. Aenean mollis, libero et dapibus vulputate, ligula metus facilisis urna, ac dignissim justo eros id ex. Donec interdum molestie velit nec aliquam. Ut tempor tincidunt luctus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec aliquet augue mauris, sed tempus tellus viverra vitae. Nunc luctus in ante id bibendum. Nunc vehicula dui et ornare volutpat. Ut gravida venenatis odio sit amet consectetur. Praesent tempus varius gravida. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+            url="https://example.org/vocab/asu"
+          ></SearchResultComponent>
+          <SearchResultComponent
+            title="Asu"
+            desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed elementum nisl et orci feugiat semper. Aliquam erat volutpat. Maecenas semper ipsum a dolor interdum, a accumsan risus malesuada. Cras eu bibendum massa. Nunc suscipit quam vel est condimentum, ut posuere ante ultricies. Curabitur porttitor, augue a volutpat dictum, metus dolor commodo odio, ultricies viverra lorem risus id nisi. Aenean mollis, libero et dapibus vulputate, ligula metus facilisis urna, ac dignissim justo eros id ex. Donec interdum molestie velit nec aliquam. Ut tempor tincidunt luctus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec aliquet augue mauris, sed tempus tellus viverra vitae. Nunc luctus in ante id bibendum. Nunc vehicula dui et ornare volutpat. Ut gravida venenatis odio sit amet consectetur. Praesent tempus varius gravida. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+            url="https://example.org/vocab/asu"
+          ></SearchResultComponent>
+          <SearchResultComponent
+            title="Asu"
+            desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed elementum nisl et orci feugiat semper. Aliquam erat volutpat. Maecenas semper ipsum a dolor interdum, a accumsan risus malesuada. Cras eu bibendum massa. Nunc suscipit quam vel est condimentum, ut posuere ante ultricies. Curabitur porttitor, augue a volutpat dictum, metus dolor commodo odio, ultricies viverra lorem risus id nisi. Aenean mollis, libero et dapibus vulputate, ligula metus facilisis urna, ac dignissim justo eros id ex. Donec interdum molestie velit nec aliquam. Ut tempor tincidunt luctus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec aliquet augue mauris, sed tempus tellus viverra vitae. Nunc luctus in ante id bibendum. Nunc vehicula dui et ornare volutpat. Ut gravida venenatis odio sit amet consectetur. Praesent tempus varius gravida. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+            url="https://example.org/vocab/asu"
+          ></SearchResultComponent>
+        </div>
+        <div className="flex-start flex flex-col items-center content-center justify-center">
+          <BoxComponent
+            images={images}
+            attributes={attributes}
+            accordionsData={accordions}
+          ></BoxComponent>
+        </div>
       </div>
     </Main>
   );

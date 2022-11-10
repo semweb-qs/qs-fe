@@ -12,7 +12,7 @@ const Main = (props: IMainProps) => (
   <div className="w-full px-1 text-gray-700 antialiased">
     {props.meta}
 
-    <div className="mx-auto max-w-screen-md">
+    <div className="mx-auto max-w-screen-lg">
       <div className="border-b border-gray-300">
         <div className="pt-16 pb-8 content-center items-center text-center">
           <div className="text-3xl font-bold text-gray-900">
@@ -22,7 +22,7 @@ const Main = (props: IMainProps) => (
         </div>
       </div>
 
-      <div className="content py-5 text-xl">{props.children}</div>
+      <div className="w-full content py-5 text-xl">{props.children}</div>
 
       <div className="border-t border-gray-300 py-8 text-center text-sm">
         © Copyright {new Date().getFullYear()} {AppConfig.title}. Made with{' '}
