@@ -36,7 +36,7 @@ export default function BoxComponent({ images, attributes, accordionsData }) {
               <img
                 src={el.src}
                 alt={el.alt}
-                className="h-48 w-auto object-cover object-top"
+                className="h-28 w-auto object-cover object-top"
                 key={i}
               ></img>
             );
@@ -52,22 +52,17 @@ export default function BoxComponent({ images, attributes, accordionsData }) {
 
       <CardBody>
         <div className="font-bold text-3xl text-purple-400">📚 Basic Info</div>
-        <table className="table-auto w-full">
-          <tbody>
-            {attributes.map((el, i) => {
-              return (
-                <tr key={i}>
-                  <td className="w-1/5">
-                    <div className="w-auto font-bold">{el[0]}</div>
-                  </td>
-                  <td>
-                    <div>{el[1]}</div>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <div>
+          {attributes.map((el, i) => {
+            return (
+              <div className="flex flex-row gap-3" key={i}>
+                <div className="w-auto font-bold">{el[0]}</div>
+                <div>{el[1]}</div>
+                <hr />
+              </div>
+            );
+          })}
+        </div>
         <hr className="my-3" />
         <div>
           <div className="font-bold text-3xl text-purple-400">
