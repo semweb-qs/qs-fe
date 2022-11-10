@@ -51,10 +51,10 @@ const Index = () => {
         <SearchComponent></SearchComponent>
       </div>
 
-      <div className="flex flex-col-reverse md:flex-row ">
+      <div className="flex flex-col-reverse md:flex-row">
         <div
           id="search-result"
-          className="flex flex-col gap-7 w-[150vw] m-2 px-3"
+          className="flex flex-col gap-7 w-full md:w-3/5 m-2 px-3"
         >
           <SearchResultComponent
             title="Asu"
@@ -82,7 +82,7 @@ const Index = () => {
             url="https://example.org/vocab/asu"
           ></SearchResultComponent>
         </div>
-        <div className="flex-start flex flex-col items-center content-center justify-center">
+        <div className="flex-start w-full md:w-2/5 flex flex-col items-center content-center justify-center">
           <BoxComponent
             images={images}
             attributes={attributes}

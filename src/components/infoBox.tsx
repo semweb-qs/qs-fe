@@ -23,7 +23,7 @@ export default function BoxComponent({ images, attributes, accordionsData }) {
     });
   };
   return (
-    <Card>
+    <Card className="p-3 m-3">
       <CardHeader
         className="m-0"
         floated={false}
@@ -42,11 +42,12 @@ export default function BoxComponent({ images, attributes, accordionsData }) {
             );
           })}
         </div>
-
-        <div className="font-bold text-4xl mx-5">
-          Massachusets Institute of Technology
+        <div className="mx-3 flex gap-1 flex-col mb-2 mt-3">
+          <div className="font-bold text-3xl leading-none">
+            Massachusets Institute of Technology
+          </div>
+          <div>Universitas</div>
         </div>
-        <div className="mx-5 mb-2">Universitas</div>
       </CardHeader>
 
       <CardBody>
