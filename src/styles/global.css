@@ -39,3 +39,15 @@ a:hover {
 .content ul {
   @apply my-6;
 }
+
+
+.hidden-self {
+  opacity: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+.shown-self {
+  opacity: 1;
+  visibility: visible;
+}

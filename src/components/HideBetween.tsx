@@ -1,3 +1,4 @@
+import ctl from '@netlify/classnames-template-literals';
 import React, { useEffect, useState } from 'react';
 
 interface HideBetweenProps {
@@ -55,13 +56,23 @@ export default function HideBetween(props) {
     const winScroll: number =
       document.body.scrollTop || document.documentElement.scrollTop;
     if (winScroll >= startDivTopOffset && winScroll <= endDivTopOffset) {
-      setShow(!inverse);
-    } else {
       setShow(inverse);
+    } else {
+      setShow(!inverse);
     }
   };
   useEffect(() => {
     window.addEventListener('scroll', listenToScroll);
   }, []);
-  return <div>{show ? props.children : <div />}</div>;
+  const buttonClasses = ctl(`
+    sticky
+    top-0
+    ${show ? 'shown-self' : 'hidden-self'}
+    transition-all
+`);
+  return (
+    <React.Fragment>
+      <div className={buttonClasses}>{props.children}</div>
+    </React.Fragment>
+  );
 }

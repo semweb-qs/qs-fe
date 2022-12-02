@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
+import HideBetween from '@/components/HideBetween';
 import BoxComponent from '@/components/infoBox';
 import SearchComponent from '@/components/searchBar';
 import SearchResultComponent from '@/components/SearchResultComponent';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
-import HideBetween from '@/components/HideBetween';
 
 const images = [
   {
@@ -42,8 +42,12 @@ const Search = () => {
   const description = `Search: ${q}`;
   return (
     <div id="base-div">
-      <HideBetween div startDivID="base-div" endDivID="search-bar">
-        <header className="sticky top-0 z-30 w-full px-2 py-4 bg-white sm:px-4 shadow-md">
+      <HideBetween
+        div
+        startDivID="base-div"
+        endDivID="search-bar"
+      >
+        <header className="z-30 w-full px-2 py-4 bg-white sm:px-4 shadow-md">
           <div className="flex items-center justify-between mx-auto max-w-7xl">
             <a href="#">
               <span className="text-2xl font-extrabold text-blue-600">
