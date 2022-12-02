@@ -42,11 +42,7 @@ const Search = () => {
   const description = `Search: ${q}`;
   return (
     <div id="base-div">
-      <HideBetween
-        div
-        startDivID="base-div"
-        endDivID="search-bar"
-      >
+      <HideBetween div startDivID="base-div" endDivID="search-bar">
         <header className="z-30 w-full px-2 py-4 bg-white sm:px-4 shadow-md">
           <div className="flex items-center justify-between mx-auto max-w-7xl">
             <a href="#">
@@ -110,7 +106,7 @@ const Search = () => {
       >
         <div className="flex flex-col items-center content-center justify-center">
           {/* Use router.basePath relatively */}
-          <SearchBar></SearchBar>
+          <SearchBar defaultValue={q}></SearchBar>
         </div>
 
         <div className="flex flex-col-reverse md:flex-row items-start">

@@ -1,11 +1,19 @@
 import { Option, Select } from '@material-tailwind/react';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
-export default function SearchBar() {
+export default function SearchBar({ defaultValue }) {
   const router = useRouter();
+  const [searchValue, setSearchValue] = useState(defaultValue ?? '');
   const searchFunction = () => {
-    console.log('search');
+    if (searchValue != '')
+      router.push({ pathname: '/search', query: { q: searchValue } });
   };
+
+  const handleChange = (event) => {
+    setSearchValue(event.target.value);
+  };
+
   return (
     <div
       id="search-bar"
@@ -15,6 +23,8 @@ export default function SearchBar() {
         <input
           type="text"
           className="block w-full mx-2 px-4 py-2 text-blue-700 bg-white border rounded-full focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+          onChange={handleChange}
+          value={searchValue}
           placeholder="Search..."
         />
         <button
