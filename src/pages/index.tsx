@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-import SearchComponent from '@/components/searchBar';
+import SearchBar from '@/components/searchBar';
 import SearchResultComponent from '@/components/SearchResultComponent';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
@@ -20,7 +20,7 @@ const Index = () => {
     >
       <div className="flex flex-col items-center content-center justify-center">
         {/* Use router.basePath relatively */}
-        <SearchComponent></SearchComponent>
+        <SearchBar></SearchBar>
       </div>
     </Main>
   );
