@@ -2,11 +2,11 @@ import { Option, Select } from '@material-tailwind/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-export default function SearchBar({ defaultValue }) {
+export default function SearchBar({ defaultValue = '' }) {
   const router = useRouter();
   const [searchValue, setSearchValue] = useState(defaultValue ?? '');
   const searchFunction = () => {
-    if (searchValue != '')
+    if (searchValue !== '')
       router.push({ pathname: '/search', query: { q: searchValue } });
   };
 
