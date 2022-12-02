@@ -13,13 +13,16 @@ export default function SearchBar({ defaultValue = '' }) {
   const handleChange = (event) => {
     setSearchValue(event.target.value);
   };
-
+  const onFormSubmit = (e) => {
+    e.preventDefault();
+    // send state to server with e.g. `window.fetch`
+  };
   return (
     <div
       id="search-bar"
       className="flex items-center w-full justify-center max-w-screen-md my-5"
     >
-      <div className="flex space-x-1 w-full mb-2">
+      <form onSubmit={onFormSubmit} className="flex space-x-1 w-full mb-2">
         <input
           type="text"
           className="block w-full mx-2 px-4 py-2 text-blue-700 bg-white border rounded-full focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
@@ -46,7 +49,7 @@ export default function SearchBar({ defaultValue = '' }) {
             />
           </svg>
         </button>
-      </div>
+      </form>
     </div>
   );
 }
