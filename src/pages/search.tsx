@@ -1,13 +1,12 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { HideBetween } from 'react-hide-on-scroll';
 
 import BoxComponent from '@/components/infoBox';
 import SearchComponent from '@/components/searchBar';
 import SearchResultComponent from '@/components/SearchResultComponent';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
-import { motion } from 'framer-motion';
+import HideBetween from '@/components/HideBetween';
 
 const images = [
   {
@@ -44,10 +43,7 @@ const Search = () => {
   return (
     <div id="base-div">
       <HideBetween div startDivID="base-div" endDivID="search-bar">
-        <motion.div
-          transition={{ ease: 'easeOut', duration: 2 }}
-          className="sticky top-0 z-30 w-full px-2 py-4 bg-white sm:px-4 shadow-md"
-        >
+        <header className="sticky top-0 z-30 w-full px-2 py-4 bg-white sm:px-4 shadow-md">
           <div className="flex items-center justify-between mx-auto max-w-7xl">
             <a href="#">
               <span className="text-2xl font-extrabold text-blue-600">
@@ -103,7 +99,7 @@ const Search = () => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </header>
       </HideBetween>
       <Main
         meta={<Meta title="MedLine Search Engine" description={description} />}
