@@ -32,7 +32,7 @@ export default function SearchBar({ defaultValue = '' }) {
         />
         <button
           onClick={searchFunction}
-          className="px-4 text-white bg-blue-600 rounded-full "
+          className="px-4 text-white bg-blue-500 rounded-full hover:bg-blue-600 active:bg-blue-700"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
