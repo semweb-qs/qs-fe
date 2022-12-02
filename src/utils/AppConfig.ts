@@ -1,6 +1,6 @@
 export const AppConfig = {
-  site_name: 'qs-fe',
-  title: 'QS World University Semantic Web',
-  description: 'Semantic Web Access for QS World University',
+  site_name: 'ir-fe',
+  title: 'Medical Search',
+  description: 'Medical Search Engine',
   locale: 'en',
 };

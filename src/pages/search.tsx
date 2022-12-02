@@ -34,12 +34,11 @@ const accordions = [
   { header: 'Ini', content: 'Kocak lu' },
 ];
 
-const Index = () => {
+const Search = () => {
   const router = useRouter();
   const [textFieldValue, setTextFieldValue] = useState('');
-  console.log(router.query);
   const { q } = router.query;
-  const description = q ? `Search: ${q}` : `Search Engine Homepage`;
+  const description = `Search: ${q}`;
   return (
     <Main
       meta={<Meta title="MedLine Search Engine" description={description} />}
@@ -95,4 +94,19 @@ const Index = () => {
   );
 };
 
-export default Index;
+export async function getServerSideProps(context) {
+  if (!context.query.q) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+}
+
+export default Search;
