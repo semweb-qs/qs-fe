@@ -2,7 +2,10 @@ import { Option, Select } from '@material-tailwind/react';
 
 export default function SearchComponent() {
   return (
-    <div className="flex items-center w-full justify-center max-w-screen-md my-5">
+    <div
+      id="search-bar"
+      className="flex items-center w-full justify-center max-w-screen-md my-5"
+    >
       <div className="flex space-x-1 w-full mb-2">
         <input
           type="text"
