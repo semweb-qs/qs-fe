@@ -1,19 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
 
 @tailwind base;
 
-@font-face {
-  font-family: poor-story;
-  src: url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
-}
-
 body {
-  font-family: "Poor Story", "Comic Sans MS", sans-serif;
+  font-family: "Raleway", "Open Sans", sans-serif;
   background-color: #ffffff;
 }
 
 .force-font {
-  font-family: "Poor Story", "Comic Sans MS", sans-serif;
+  font-family: "Raleway", "Open Sans", sans-serif;
+}
+
+.raleway {
+  font-family: "Raleway", "Open Sans", sans-serif;
+}
+
+.arial {
+  font-family: "Arial", "Open Sans", sans-serif;
 }
 
 a {
@@ -21,7 +25,7 @@ a {
 }
 
 a:hover {
-  @apply border-b-2 border-blue-700;
+  text-decoration: underline;
 }
 
 @tailwind components;

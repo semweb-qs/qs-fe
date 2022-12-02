@@ -51,7 +51,7 @@ export default function BoxComponent({ images, attributes, accordionsData }) {
       </CardHeader>
 
       <CardBody>
-        <div className="font-bold text-3xl text-purple-400">📚 Basic Info</div>
+        <div className="font-bold text-3xl text-blue-400">📚 Basic Info</div>
         <div>
           {attributes.map((el, i) => {
             return (
@@ -65,7 +65,7 @@ export default function BoxComponent({ images, attributes, accordionsData }) {
         </div>
         <hr className="my-3" />
         <div>
-          <div className="font-bold text-3xl text-purple-400">
+          <div className="font-bold text-3xl text-blue-400">
             📚 Extra Info
           </div>
           {accordionsData.map((el, i) => {

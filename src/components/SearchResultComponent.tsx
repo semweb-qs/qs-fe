@@ -12,10 +12,10 @@ export default function SearchResultComponent({ url, title, desc }) {
     <div className="flex flex-col">
       <div className="font-light text-gray-700 text-sm">{url}</div>
       <hr />
-      <a href={url} className="font-bold text-2xl m-0 p-0 text-purple-300">
+      <a href={url} className="arial text-2xl m-0 p-0 text-blue-700 w-fit">
         {title}
       </a>
-      <div className="text-md m-0 p-0">{showDesc}</div>
+      <div className="arial text-md m-0 p-0">{showDesc}</div>
     </div>
   );
 }
