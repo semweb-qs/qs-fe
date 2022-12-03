@@ -24,7 +24,7 @@ const Index = () => {
           className="flex pt-16 pb-8 content-center items-center text-center justify-center"
         >
           <img
-            className="w-1/2 p-0 m-0"
+            className="w-3/4 md:w-1/2 p-0 m-0"
             src={`${router.basePath}/assets/Medigle.png`}
             alt={'Medigle logo'}
           ></img>

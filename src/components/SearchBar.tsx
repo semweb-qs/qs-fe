@@ -37,7 +37,7 @@ export default function SearchBar({ defaultValue = '', showLogo = false }) {
         <form onSubmit={onFormSubmit} className="flex space-x-1 w-full mb-2">
           <input
             type="text"
-            className="block w-full mx-2 px-4 py-2 text-blue-700 bg-white border rounded-full focus:border-blue-400 focus:ring-blue-300/40 focus:outline-none focus:ring"
+            className="block w-full mx-2 px-4 py-2 text-blue-700 bg-white border rounded-full focus:border-blue-400 focus:ring-blue-300/40 focus:outline-none"
             onChange={handleChange}
             value={searchValue}
             placeholder="Search..."
