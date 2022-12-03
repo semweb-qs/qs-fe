@@ -1,6 +1,7 @@
 export const AppConfig = {
-  site_name: 'ir-fe',
-  title: 'Medical Search',
-  description: 'Medical Search Engine',
+  site_name: 'qmedigle-fe',
+  title: 'QMedigle: MedLine Information Retrieval',
+  description:
+    'QMedigle is a Web MedLine Information Retrieval Dataset Search Engine',
   locale: 'en',
 };

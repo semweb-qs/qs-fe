@@ -65,9 +65,7 @@ export default function BoxComponent({ images, attributes, accordionsData }) {
         </div>
         <hr className="my-3" />
         <div>
-          <div className="font-bold text-3xl text-blue-400">
-            📚 Extra Info
-          </div>
+          <div className="font-bold text-3xl text-blue-400">📚 Extra Info</div>
           {accordionsData.map((el, i) => {
             return (
               <Accordion key={i} open={openStates[i]}>
