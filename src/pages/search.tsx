@@ -13,29 +13,29 @@ const SEARCH_API = `${BASE_API}/search`;
 
 const images = [
   {
-    src: 'https://c2.staticflickr.com/9/8817/28973449265_07e3aa5d2e_b.jpg'
+    src: 'https://c2.staticflickr.com/9/8817/28973449265_07e3aa5d2e_b.jpg',
   },
   {
-    src: 'https://static.wikia.nocookie.net/gensin-impact/images/e/e1/Character_Venti_Game.png'
+    src: 'https://static.wikia.nocookie.net/gensin-impact/images/e/e1/Character_Venti_Game.png',
   },
   {
     src: 'https://c2.staticflickr.com/9/8356/28897120681_3b2c0f43e0_b.jpg',
-    alt: 'Boats (Jeshu John - designerspics.com)'
+    alt: 'Boats (Jeshu John - designerspics.com)',
   },
   {
-    src: 'https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_b.jpg'
-  }
+    src: 'https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_b.jpg',
+  },
 ];
 
 const attributes = [
   ['Nama', 'Massachusets Institute of Technology'],
   ['Lokasi', 'Depok'],
-  ['Negara', 'Indonesia']
+  ['Negara', 'Indonesia'],
 ];
 
 const accordions = [
   { header: 'Ini kepalanya', content: 'Ini Kontennya' },
-  { header: 'Ini', content: 'Kocak lu' }
+  { header: 'Ini', content: 'Kocak lu' },
 ];
 
 const Search = ({ searchResult }) => {
@@ -44,19 +44,29 @@ const Search = ({ searchResult }) => {
   const q = String(router.query.q);
   const description = `Search: ${q}`;
   return (
-    <div id='base-div'>
+    <div id="base-div">
       <Main
-        meta={<Meta title='MedLine Search Engine' description={description} />}
+        meta={<Meta title="MedLine Search Engine" description={description} />}
       >
-        <div className='sticky top-0 flex flex-col items-center content-center justify-center'>
+        <div className="sticky top-0 flex flex-col items-center content-center justify-center">
           {/* Use router.basePath relatively */}
           <SearchBar showLogo={true} defaultValue={q}></SearchBar>
         </div>
 
-        <div className='flex flex-col-reverse md:flex-row items-start'>
+        {searchResult.length === 0 ? (
+          <div className="flex flex-col items-center justify-center">
+            <img
+              src={`${router.basePath}/assets/NotFound.gif`}
+              alt={'Not Found logo'}
+            ></img>
+            <div className="font-bold">
+              No Document Found...
+            </div>
+          </div>
+        ) : (
           <div
-            id='search-result'
-            className='flex flex-col gap-7 w-full md:w-3/5 m-2 px-3'
+            id="search-result"
+            className="flex flex-col gap-7 max-w-screen-md m-2 px-3 place-self-start"
           >
             {searchResult.map((val, idx) => {
               return (
@@ -70,7 +80,7 @@ const Search = ({ searchResult }) => {
               );
             })}
           </div>
-        </div>
+        )}
       </Main>
     </div>
   );
@@ -81,23 +91,22 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         permanent: false,
-        destination: '/'
-      }
+        destination: '/',
+      },
     };
   }
   let resultList = [];
   try {
     const res = await axios.post(SEARCH_API, {
       content: context.query.q,
-      rerank: true
+      rerank: true,
     });
     resultList = res.data.results;
-  } catch {
-  }
+  } catch {}
   return {
     props: {
-      searchResult: resultList
-    }
+      searchResult: resultList,
+    },
   };
 }
 
