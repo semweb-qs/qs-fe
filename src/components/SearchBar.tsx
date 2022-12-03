@@ -21,13 +21,13 @@ export default function SearchBar({ defaultValue = '', showLogo = false }) {
     <div className="flex w-screen bg-white items-center content-center justify-center">
       <div
         id="search-bar"
-        className="flex flex-row md:gap-5 items-center w-full max-w-screen-lg mb-3 px-5 pt-4"
+        className="flex flex-col md:flex-row gap-5 md:gap-2 items-center w-full max-w-screen-lg mb-3 px-5 pt-4"
       >
         {showLogo && (
-          <div className="p-0 m-0 h-10">
+          <div className="shrink-0 p-0 m-0">
             <a href={'/'}>
               <img
-                className="p-0 m-0 h-full"
+                className="p-0 m-0 h-10"
                 src={`${router.basePath}/assets/Medigle.png`}
                 alt={'Medigle logo'}
               ></img>
