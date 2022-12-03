@@ -61,6 +61,7 @@ const Search = ({ searchResult }) => {
             {searchResult.map((val, idx) => {
               return (
                 <SearchResultComponent
+                  score={val.score}
                   key={idx}
                   title={val.id}
                   desc={val.excerpt}
@@ -88,9 +89,13 @@ export async function getServerSideProps(context) {
     content: context.query.q,
     rerank: true,
   });
+  let resultList = [];
+  try {
+    resultList = res.data.results;
+  } catch {}
   return {
     props: {
-      searchResult: res.data.results,
+      searchResult: resultList,
     },
   };
 }
