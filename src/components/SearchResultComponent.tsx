@@ -15,7 +15,7 @@ export default function SearchResultComponent({ url, title, desc }) {
       <a href={url} className="arial text-2xl m-0 p-0 text-blue-700 w-fit">
         {title}
       </a>
-      <div className="arial text-md m-0 p-0">{showDesc}</div>
+      <div className="arial m-0 p-0">{showDesc}</div>
     </div>
   );
 }

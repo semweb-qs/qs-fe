@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import HideBetween from '@/components/HideBetween';
-import SearchBar from '@/components/searchBar';
+import SearchBar from '@/components/SearchBar';
 import SearchResultComponent from '@/components/SearchResultComponent';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
@@ -46,7 +46,7 @@ const Search = () => {
       >
         <div className="sticky top-0 flex flex-col items-center content-center justify-center">
           {/* Use router.basePath relatively */}
-          <SearchBar defaultValue={q}></SearchBar>
+          <SearchBar showLogo={true} defaultValue={q}></SearchBar>
         </div>
 
         <div className="flex flex-col-reverse md:flex-row items-start">

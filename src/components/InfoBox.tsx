@@ -30,7 +30,7 @@ export default function BoxComponent({ images, attributes, accordionsData }) {
         variant="gradient"
         color="white"
       >
-        <div className="flex-fit flex basis-2 overflow-x-scroll gap-2">
+        <div className="flex basis-2 overflow-x-scroll gap-2">
           {images.map((el, i) => {
             return (
               <img
