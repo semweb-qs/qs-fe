@@ -1,4 +1,5 @@
 import { Option, Select } from '@material-tailwind/react';
+import Decimal from 'decimal.js';
 
 const MAX_DESC = 100;
 
@@ -11,13 +12,13 @@ export default function SearchResultComponent({ url, title, desc, score }) {
   return (
     <div className="flex flex-col">
       <div className="font-light text-gray-700 text-sm">
-        {url} | score: {score}
+        {url} | <span className="font-bold">score: {new Decimal(score).toPrecision(4)}</span>
       </div>
       <hr />
-      <a href={url} className="arial text-2xl m-0 p-0 text-blue-700 w-fit">
+      <a href={url} className="arial text-xl m-0 p-0 text-blue-700 w-fit">
         {title}
       </a>
-      <div className="arial m-0 p-0">{showDesc}</div>
+      <div className="arial m-0 p-0 text-sm">{showDesc}</div>
     </div>
   );
 }
