@@ -3,6 +3,7 @@ import Decimal from 'decimal.js';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import sanitizeHtml from 'sanitize-html';
 
 import HideBetween from '@/components/HideBetween';
 import SearchBar from '@/components/SearchBar';
@@ -58,12 +59,23 @@ const Search = ({ searchResult, spellcheck, showSpellcheck, duration }) => {
             className="flex flex-col gap-7 max-w-screen-md m-2 px-3 place-self-start"
           >
             {searchResult.map((val, idx) => {
+              const queries = new Set(q.split(' '));
+              const newDesc = [];
+
+              for (const desc of sanitizeHtml(val.excerpt).split(' ')) {
+                if (queries.has(desc)) {
+                  newDesc.push(`<span className='font-bold'>${desc}</span>`);
+                } else {
+                  newDesc.push(desc);
+                }
+              }
+              const highlighted = newDesc.join(' ');
               return (
                 <SearchResultComponent
                   score={val.score}
                   key={idx}
-                  title={val.id}
-                  desc={val.excerpt}
+                  title={`Document with title: ${val.id}`}
+                  desc={highlighted}
                   url={`collection/${val.path}`}
                 ></SearchResultComponent>
               );
