@@ -4,4 +4,5 @@ export const AppConfig = {
   description:
     'QMedigle is a Web MedLine Information Retrieval Dataset Search Engine',
   locale: 'en',
+  base_backend: 'http://localhost:8080',
 };

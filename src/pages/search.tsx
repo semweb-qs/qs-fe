@@ -7,9 +7,9 @@ import SearchBar from '@/components/SearchBar';
 import SearchResultComponent from '@/components/SearchResultComponent';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
+import { AppConfig } from '@/utils/AppConfig';
 
-const BASE_API = 'http://localhost:8080';
-const SEARCH_API = `${BASE_API}/search`;
+const SEARCH_API = `${AppConfig.base_backend}/search`;
 
 const images = [
   {
@@ -73,7 +73,7 @@ const Search = ({ searchResult }) => {
                   key={idx}
                   title={val.id}
                   desc={val.excerpt}
-                  url={val.path}
+                  url={`collection/${val.path}`}
                 ></SearchResultComponent>
               );
             })}
