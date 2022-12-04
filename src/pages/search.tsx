@@ -118,9 +118,7 @@ export async function getServerSideProps(context) {
       }
     );
     if (res.data.results) resultList = res.data.results;
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
   const duration = performance.now() - start;
 
   let spellcheckQuery = context.query.q;
