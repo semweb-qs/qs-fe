@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Decimal from 'decimal.js';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -12,7 +13,7 @@ import { AppConfig } from '@/utils/AppConfig';
 const SEARCH_API = `${AppConfig.base_backend}/search`;
 const SPELLCHECK_API = `${AppConfig.base_backend}/spellcheck`;
 
-const Search = ({ searchResult, spellcheck, showSpellcheck }) => {
+const Search = ({ searchResult, spellcheck, showSpellcheck, duration }) => {
   const router = useRouter();
   const [textFieldValue, setTextFieldValue] = useState('');
   const q = String(router.query.q);
@@ -26,12 +27,21 @@ const Search = ({ searchResult, spellcheck, showSpellcheck }) => {
           {/* Use router.basePath relatively */}
           <SearchBar showLogo={true} defaultValue={q}></SearchBar>
         </div>
-        {showSpellcheck && (
-          <div>
-            Maybe, you mean: &quot;
-            <a href={`/search?q=${spellcheck}`}>{spellcheck}</a>&quot;?
+        <div className="max-w-screen-md px-5 pt-4">
+          {showSpellcheck && (
+            <div>
+              Maybe, you mean: &quot;
+              <a href={`/search?q=${spellcheck}`}>{spellcheck}</a>&quot;?
+            </div>
+          )}
+          <div className="text-sm text-blue-800">
+            Fetched results in:{' '}
+            <span className="font-bold">
+              {new Decimal(duration).toPrecision(4)}
+            </span>{' '}
+            ms
           </div>
-        )}
+        </div>
         {searchResult.length === 0 ? (
           <div className="flex flex-col items-center justify-center">
             <img
@@ -72,6 +82,7 @@ export async function getServerSideProps(context) {
       },
     };
   }
+  const start = performance.now();
   let resultList = [];
   try {
     const res = await axios.post(SEARCH_API, {
@@ -80,6 +91,7 @@ export async function getServerSideProps(context) {
     });
     if (res.data.results) resultList = res.data.results;
   } catch {}
+  const duration = performance.now() - start;
 
   let spellcheckQuery = context.query.q;
   let changed = false;
@@ -98,6 +110,7 @@ export async function getServerSideProps(context) {
       searchResult: resultList,
       spellcheck: spellcheckQuery,
       showSpellcheck: changed,
+      duration,
     },
   };
 }
