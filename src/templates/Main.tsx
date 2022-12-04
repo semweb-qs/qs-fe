@@ -11,10 +11,10 @@ type IMainProps = {
 const Main = (props: IMainProps) => {
   const router = useRouter();
   return (
-    <div className="w-full px-1 text-gray-700 antialiased">
+    <div className="flex justify-center overflow-hidden w-full text-gray-700 antialiased">
       {props.meta}
 
-      <div className="mx-auto max-w-screen-lg">
+      <div className="max-w-screen-xl">
         <div className="content w-full pb-5 text-xl">{props.children}</div>
 
         <div className="border-t border-gray-300 py-8 text-center text-sm">

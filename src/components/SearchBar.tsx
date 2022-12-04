@@ -1,4 +1,3 @@
-
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
@@ -33,7 +32,7 @@ export default function SearchBar({ defaultValue = '', showLogo = false }) {
   // @ts-ignore
   // @ts-ignore
   return (
-    <div className="flex w-screen bg-white items-center content-center justify-center">
+    <div className="z-50 flex w-screen bg-white items-center content-center justify-center overflow-hidden">
       <div
         id="search-bar"
         className="flex flex-col md:flex-row gap-5 md:gap-5 items-center justify-center w-full max-w-screen-lg mb-3 px-5 pt-4"

@@ -11,7 +11,6 @@ const COLLECTION_API = `${AppConfig.base_backend}/collection`;
 const Collection = ({ content }) => {
   const router = useRouter();
   const { part, cid } = router.query;
-  const [textFieldValue, setTextFieldValue] = useState('');
   const q = router.query.q ? String(router.query.q) : '';
   const description = `MedLine Document ${part} ${cid}`;
   return (
@@ -23,7 +22,7 @@ const Collection = ({ content }) => {
       <h1 className="font-bold text-center">
         Collection: {part}/{cid}
       </h1>
-      <p className={"text-sm p-5 text-justify"}>{content}</p>
+      <p className={'text-sm p-5 text-justify'}>{content}</p>
     </Main>
   );
 };
