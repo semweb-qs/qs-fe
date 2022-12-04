@@ -1,5 +1,8 @@
+import 'react-history-search/dist/index.css'; // import css
+
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { History, Provider, Trigger } from 'react-history-search';
 
 import MedigleLogo from '@/components/MedigleLogo';
 
@@ -28,6 +31,9 @@ export default function SearchBar({ defaultValue = '', showLogo = false }) {
     e.preventDefault();
     // send state to server with e.g. `window.fetch`
   };
+  // @ts-ignore
+  // @ts-ignore
+  // @ts-ignore
   return (
     <div className="flex w-screen bg-white items-center content-center justify-center">
       <div
@@ -56,14 +62,27 @@ export default function SearchBar({ defaultValue = '', showLogo = false }) {
                 ></path>
               </svg>
             </div>
-            <input
-              type="text"
-              id="voice-search"
-              className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Search..."
-              onChange={handleChange}
-              value={searchValue}
-            />
+
+            <Provider
+              value={{
+                // pass options in here
+                // LocalStorageKey: 'key_in_local_storage',
+                limitHistory: 5,
+                handleSearch: searchFunction,
+                isEnterDown: true,
+              }}
+            >
+              <History isHint isTabFill isRemoveHistory>
+                <input
+                  type="text"
+                  id="voice-search"
+                  className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Search..."
+                  onChange={handleChange}
+                  value={searchValue}
+                />
+              </History>
+            </Provider>
             <button
               type="button"
               className="absolute inset-y-0 right-0 flex items-center pr-3"
@@ -106,35 +125,6 @@ export default function SearchBar({ defaultValue = '', showLogo = false }) {
             Search
           </button>
         </form>
-        {/* <form onSubmit={onFormSubmit} className="flex space-x-1 w-full mb-2"> */}
-        {/*  <input */}
-        {/*    autoComplete="on" */}
-        {/*    type="text" */}
-        {/*    className="block w-full mx-2 px-4 py-2 text-blue-700 bg-white border rounded-full focus:border-blue-400 focus:ring-blue-300/40 focus:outline-none" */}
-        {/*    onChange={handleChange} */}
-        {/*    value={searchValue} */}
-        {/*    placeholder="Search..." */}
-        {/*  /> */}
-        {/*  <button */}
-        {/*    onClick={searchFunction} */}
-        {/*    className="px-4 text-white bg-blue-500 rounded-full hover:bg-blue-600 active:bg-blue-700" */}
-        {/*  > */}
-        {/*    <svg */}
-        {/*      xmlns="http://www.w3.org/2000/svg" */}
-        {/*      className="w-5 h-5" */}
-        {/*      fill="none" */}
-        {/*      viewBox="0 0 24 24" */}
-        {/*      stroke="currentColor" */}
-        {/*      strokeWidth={2} */}
-        {/*    > */}
-        {/*      <path */}
-        {/*        strokeLinecap="round" */}
-        {/*        strokeLinejoin="round" */}
-        {/*        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" */}
-        {/*      /> */}
-        {/*    </svg> */}
-        {/*  </button> */}
-        {/* </form> */}
       </div>
     </div>
   );
