@@ -103,24 +103,42 @@ export async function getServerSideProps(context) {
   const start = performance.now();
   let resultList = [];
   try {
-    const res = await axios.post(SEARCH_API, {
-      content: context.query.q,
-      k,
-      rerank: true,
-    });
+    const res = await axios.post(
+      SEARCH_API,
+      {
+        content: context.query.q,
+        k,
+        rerank: true,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept-Encoding': 'application/json',
+        },
+      }
+    );
     if (res.data.results) resultList = res.data.results;
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
   const duration = performance.now() - start;
 
   let spellcheckQuery = context.query.q;
   let changed = false;
   try {
-    const res = await axios.post(SPELLCHECK_API, {
-      content: context.query.q,
-      rerank: true,
-    });
+    const res = await axios.post(
+      SPELLCHECK_API,
+      {
+        content: context.query.q,
+        rerank: true,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept-Encoding': 'application/json',
+        },
+      }
+    );
     // console.log(res.data)
     if (res.data.spellcheck) spellcheckQuery = res.data.spellcheck;
     if (res.data.changed) changed = res.data.changed;

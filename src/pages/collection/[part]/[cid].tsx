@@ -31,10 +31,19 @@ export async function getServerSideProps(context) {
   const { part, cid } = context.query;
   let result = '';
   try {
-    const res = await axios.post(COLLECTION_API, {
-      part: `${part}`,
-      cid: `${cid}`,
-    });
+    const res = await axios.post(
+      COLLECTION_API,
+      {
+        part: `${part}`,
+        cid: `${cid}`,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept-Encoding': 'application/json',
+        },
+      }
+    );
     result = res.data.content;
   } catch {}
   return {
