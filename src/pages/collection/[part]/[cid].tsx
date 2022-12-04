@@ -23,7 +23,7 @@ const Collection = ({ content }) => {
       <h1 className="font-bold text-center">
         Collection: {part}/{cid}
       </h1>
-      <p>{content}</p>
+      <p className={"text-sm p-5 text-justify"}>{content}</p>
     </Main>
   );
 };
