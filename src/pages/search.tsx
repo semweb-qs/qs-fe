@@ -56,12 +56,10 @@ const Search = ({ searchResult }) => {
         {searchResult.length === 0 ? (
           <div className="flex flex-col items-center justify-center">
             <img
-              src={`${router.basePath}/assets/NotFound.gif`}
+              src={`${router.basePath}/assets/NotFoundCompressed.gif`}
               alt={'Not Found logo'}
             ></img>
-            <div className="font-bold">
-              No Document Found...
-            </div>
+            <div className="font-bold">No Document Found...</div>
           </div>
         ) : (
           <div
