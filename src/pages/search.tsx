@@ -10,8 +10,9 @@ import { Main } from '@/templates/Main';
 import { AppConfig } from '@/utils/AppConfig';
 
 const SEARCH_API = `${AppConfig.base_backend}/search`;
+const SPELLCHECK_API = `${AppConfig.base_backend}/spellcheck`;
 
-const Search = ({ searchResult }) => {
+const Search = ({ searchResult, spellcheck, showSpellcheck }) => {
   const router = useRouter();
   const [textFieldValue, setTextFieldValue] = useState('');
   const q = String(router.query.q);
@@ -25,7 +26,12 @@ const Search = ({ searchResult }) => {
           {/* Use router.basePath relatively */}
           <SearchBar showLogo={true} defaultValue={q}></SearchBar>
         </div>
-
+        {showSpellcheck && (
+          <div>
+            Maybe, you mean: &quot;
+            <a href={`/search?q=${spellcheck}`}>{spellcheck}</a>&quot;?
+          </div>
+        )}
         {searchResult.length === 0 ? (
           <div className="flex flex-col items-center justify-center">
             <img
@@ -72,11 +78,26 @@ export async function getServerSideProps(context) {
       content: context.query.q,
       rerank: true,
     });
-    resultList = res.data.results;
+    if (res.data.results) resultList = res.data.results;
   } catch {}
+
+  let spellcheckQuery = context.query.q;
+  let changed = false;
+  try {
+    const res = await axios.post(SPELLCHECK_API, {
+      content: context.query.q,
+      rerank: true,
+    });
+    // console.log(res.data)
+    if (res.data.spellcheck) spellcheckQuery = res.data.spellcheck;
+    if (res.data.changed) changed = res.data.changed;
+  } catch {}
+
   return {
     props: {
       searchResult: resultList,
+      spellcheck: spellcheckQuery,
+      showSpellcheck: changed,
     },
   };
 }
