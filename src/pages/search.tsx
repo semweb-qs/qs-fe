@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Decimal from 'decimal.js';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -17,6 +18,7 @@ const Search = ({ searchResult, spellcheck, showSpellcheck, duration }) => {
   const router = useRouter();
   const [textFieldValue, setTextFieldValue] = useState('');
   const q = String(router.query.q);
+  const k = Number(router.query.k ?? 10);
   const description = `Search: ${q}`;
   return (
     <div id="base-div">
@@ -68,6 +70,11 @@ const Search = ({ searchResult, spellcheck, showSpellcheck, duration }) => {
             })}
           </div>
         )}
+        <div className="w-full flex justify-center text-center">
+          <Link scroll={false} href={`/search?q=${q}&k=${k + 10}`}>
+            More result ▼
+          </Link>
+        </div>
       </Main>
     </div>
   );
@@ -82,11 +89,13 @@ export async function getServerSideProps(context) {
       },
     };
   }
+  const k = context.query.k ?? 10;
   const start = performance.now();
   let resultList = [];
   try {
     const res = await axios.post(SEARCH_API, {
       content: context.query.q,
+      k,
       rerank: true,
     });
     if (res.data.results) resultList = res.data.results;
