@@ -11,7 +11,7 @@ export default function SearchBar({ defaultValue = '', showLogo = false }) {
       localStorage.setItem('search', JSON.stringify(defaultValue));
     }
     if (localStorage.getItem('search') === null) {
-      localStorage.setItem('search', '');
+      localStorage.setItem('search', JSON.stringify(''));
     }
     setSearchValue(JSON.parse(localStorage.getItem('search')));
   }, []);
