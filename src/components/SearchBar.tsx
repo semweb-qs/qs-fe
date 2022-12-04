@@ -8,12 +8,12 @@ export default function SearchBar({ defaultValue = '', showLogo = false }) {
   const [searchValue, setSearchValue] = useState(defaultValue ?? '');
   useEffect(() => {
     if (defaultValue !== '') {
-      localStorage.setItem('search', JSON.stringify(defaultValue));
+      localStorage.setItem('search', defaultValue);
     }
     if (localStorage.getItem('search') === null) {
-      localStorage.setItem('search', JSON.stringify(''));
+      localStorage.setItem('search', '');
     }
-    setSearchValue(JSON.parse(localStorage.getItem('search')));
+    setSearchValue(localStorage.getItem('search'));
   }, []);
   const searchFunction = () => {
     if (searchValue !== '')
@@ -22,7 +22,7 @@ export default function SearchBar({ defaultValue = '', showLogo = false }) {
 
   const handleChange = (event) => {
     setSearchValue(event.target.value);
-    localStorage.setItem('search', JSON.stringify(event.target.value));
+    localStorage.setItem('search', event.target.value);
   };
   const onFormSubmit = (e) => {
     e.preventDefault();
