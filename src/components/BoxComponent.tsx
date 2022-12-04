@@ -27,8 +27,7 @@ export default function BoxComponent({ name, url, query }) {
       cid: `${cid}`,
     })
     .then((res) => {
-      const desc = highlight(res.data.content, query);
-      setDesc(desc);
+      setDesc(highlight(res.data.content, query));
     });
 
   return (
