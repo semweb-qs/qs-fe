@@ -11,6 +11,7 @@ import SearchResultComponent from '@/components/SearchResultComponent';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
 import { AppConfig } from '@/utils/AppConfig';
+import { distance } from 'fastest-levenshtein';
 
 const SEARCH_API = `${AppConfig.base_backend}/search`;
 const SPELLCHECK_API = `${AppConfig.base_backend}/spellcheck`;
@@ -22,49 +23,63 @@ const Search = ({ searchResult, spellcheck, showSpellcheck, duration }) => {
   const k = Number(router.query.k ?? 10);
   const description = `Search: ${q}`;
   return (
-    <div id="base-div">
+    <div id='base-div'>
       <Main
-        meta={<Meta title="MedLine Search Engine" description={description} />}
+        meta={<Meta title='MedLine Search Engine' description={description} />}
       >
-        <div className="sticky top-0 flex flex-col items-center content-center justify-center">
+        <div className='sticky top-0 flex flex-col items-center content-center justify-center'>
           {/* Use router.basePath relatively */}
           <SearchBar showLogo={true} defaultValue={q}></SearchBar>
         </div>
-        <div className="max-w-screen-md px-5 pt-4">
+        <div className='max-w-screen-md px-5 pt-4'>
           {showSpellcheck && (
             <div>
               Maybe, you mean: &quot;
               <a href={`/search?q=${spellcheck}`}>{spellcheck}</a>&quot;?
             </div>
           )}
-          <div className="text-sm text-blue-800">
+          <div className='text-sm text-blue-800'>
             Fetched results in:{' '}
-            <span className="font-bold">
+            <span className='font-bold'>
               {new Decimal(duration).toPrecision(4)}
             </span>{' '}
             ms
           </div>
         </div>
         {searchResult.length === 0 ? (
-          <div className="flex flex-col items-center justify-center">
+          <div className='flex flex-col items-center justify-center'>
             <img
               src={`${router.basePath}/assets/NotFoundCompressed.gif`}
               alt={'Not Found logo'}
             ></img>
-            <div className="font-bold">No Document Found...</div>
+            <div className='font-bold'>No Document Found...</div>
           </div>
         ) : (
           <div
-            id="search-result"
-            className="flex flex-col gap-7 max-w-screen-md m-2 px-3 place-self-start"
+            id='search-result'
+            className='flex flex-col gap-7 max-w-screen-md m-2 px-3 place-self-start'
           >
             {searchResult.map((val, idx) => {
-              const queries = new Set(q.split(' '));
+              const queries = q.split(' ');
+              for (let i = 0; i < queries.length; i++) {
+                queries[i] = queries[i].toLowerCase();
+              }
               const newDesc = [];
 
               for (const desc of sanitizeHtml(val.excerpt).split(' ')) {
-                if (queries.has(desc)) {
-                  newDesc.push(`<span className='font-bold'>${desc}</span>`);
+                let added = false;
+                const curDesc = desc.toLowerCase();
+                for (const query of queries) {
+                  if (distance(query, curDesc) <= 2) {
+                    added = true;
+                    break;
+                  }
+                }
+
+                if (added) {
+                  newDesc.push(
+                    `<span className='font-bold text-red-800'>${desc}</span>`
+                  );
                 } else {
                   newDesc.push(desc);
                 }
@@ -82,7 +97,7 @@ const Search = ({ searchResult, spellcheck, showSpellcheck, duration }) => {
             })}
           </div>
         )}
-        <div className="w-full flex justify-center text-center">
+        <div className='w-full flex justify-center text-center'>
           <Link scroll={false} href={`/search?q=${q}&k=${k + 10}`}>
             More result ▼
           </Link>
@@ -97,8 +112,8 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         permanent: false,
-        destination: '/',
-      },
+        destination: '/'
+      }
     };
   }
   const k = context.query.k ?? 10;
@@ -108,10 +123,11 @@ export async function getServerSideProps(context) {
     const res = await axios.post(SEARCH_API, {
       content: context.query.q,
       k,
-      rerank: true,
+      rerank: true
     });
     if (res.data.results) resultList = res.data.results;
-  } catch {}
+  } catch {
+  }
   const duration = performance.now() - start;
 
   let spellcheckQuery = context.query.q;
@@ -119,20 +135,21 @@ export async function getServerSideProps(context) {
   try {
     const res = await axios.post(SPELLCHECK_API, {
       content: context.query.q,
-      rerank: true,
+      rerank: true
     });
     // console.log(res.data)
     if (res.data.spellcheck) spellcheckQuery = res.data.spellcheck;
     if (res.data.changed) changed = res.data.changed;
-  } catch {}
+  } catch {
+  }
 
   return {
     props: {
       searchResult: resultList,
       spellcheck: spellcheckQuery,
       showSpellcheck: changed,
-      duration,
-    },
+      duration
+    }
   };
 }
 
