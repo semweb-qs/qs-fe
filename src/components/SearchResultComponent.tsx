@@ -19,7 +19,7 @@ export default function SearchResultComponent({ url, title, desc, score }) {
         </span>
       </div>
       <hr />
-      <a href={url} className="arial text-xl m-0 p-0 text-blue-700 w-fit">
+      <a href={url} className="arial text-xl m-0 p-0 text-amber-700 w-fit">
         {title}
       </a>
       <div className="arial m-0 p-0 text-sm">{parse(desc)}</div>

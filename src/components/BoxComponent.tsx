@@ -33,7 +33,7 @@ export default function BoxComponent({ name, url, query }) {
   return (
     <Card className="lg:w-[40vw] z-[0] static h-fit p-3 m-3">
       <CardBody>
-        <div className="font-bold text-xl text-blue-600">📚 Top Result</div>
+        <div className="font-bold text-xl text-amber-600">📚 Top Result</div>
         <div className={'font-extrabold'}>{name}</div>
         <div className={'text-xs'}>{parse(desc)}</div>
         <hr className="my-3" />

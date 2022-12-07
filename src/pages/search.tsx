@@ -38,7 +38,7 @@ const Search = ({ searchResult, spellcheck, showSpellcheck, duration }) => {
               <a href={`/search?q=${spellcheck}`}>{spellcheck}</a>&quot;?
             </div>
           )}
-          <div className="text-sm text-blue-800">
+          <div className="text-sm text-amber-800">
             Fetched results in:{' '}
             <span className="font-bold">
               {new Decimal(duration).toPrecision(4)}
