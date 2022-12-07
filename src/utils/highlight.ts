@@ -21,7 +21,9 @@ export const highlight = (content, q) => {
       }
 
       if (added) {
-        newDesc.push(`<span className='font-bold text-red-800'>${desc}</span>`);
+        newDesc.push(
+          `<span className='font-bold text-black-800'>${desc}</span>`
+        );
       } else {
         newDesc.push(desc);
       }
