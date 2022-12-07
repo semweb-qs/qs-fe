@@ -6,7 +6,7 @@ export default function NavigationBar() {
       <header className="z-30 w-full px-2 py-4 bg-white sm:px-4 shadow-md">
         <div className="flex items-center justify-between mx-auto max-w-7xl">
           <a href="#">
-            <span className="text-2xl font-extrabold text-blue-600">Logo</span>
+            <span className="text-2xl font-extrabold text-amber-600">Logo</span>
           </a>
           <div className="flex items-center space-x-1">
             <ul className="hidden space-x-2 md:inline-flex">
