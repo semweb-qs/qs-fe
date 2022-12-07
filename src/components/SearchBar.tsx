@@ -63,7 +63,11 @@ export default function SearchBar({ defaultValue = '', showLogo = false }) {
             <input
               type="text"
               id="voice-search"
-              className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
+              className="w-full bg-gray-50 border border-gray-300 text-gray-900
+               text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500
+               block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600
+               dark:placeholder:text-gray-400 dark:text-white dark:focus:ring-amber-500
+               dark:focus:border-amber-500"
               placeholder="Search..."
               onChange={handleChange}
               value={searchValue}
