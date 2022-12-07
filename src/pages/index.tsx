@@ -25,7 +25,7 @@ const Index = () => {
         >
           <img
             className="w-3/4 md:w-1/2 p-0 m-0"
-            src={`${router.basePath}/assets/Medigle.png`}
+            src={`${router.basePath}/assets/qs-world.png`}
             alt={'Medigle logo'}
           ></img>
         </a>
