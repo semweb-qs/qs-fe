@@ -94,7 +94,7 @@ export default function SearchBar({ defaultValue = '', showLogo = false }) {
           <button
             onClick={searchFunction}
             type="submit"
-            className="inline-flex items-center py-2.5 px-3 ml-2 text-sm font-medium text-white bg-amber-700 rounded-lg border border-amber-700 hover:bg-amber-800 focus:ring-4 focus:outline-none focus:ring-amber-300 dark:bg-amber-600 dark:hover:bg-amber-700 dark:focus:ring-amber-800"
+            className="inline-flex items-center py-2.5 px-3 ml-2 text-sm font-medium text-white bg-amber-500 rounded-lg border border-amber-500 hover:bg-amber-600 focus:ring-4 focus:outline-none focus:ring-amber-300 dark:bg-amber-600 dark:hover:bg-amber-700 dark:focus:ring-amber-800"
           >
             <svg
               aria-hidden="true"
