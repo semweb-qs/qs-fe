@@ -15,7 +15,6 @@ export default function SearchBar({ defaultValue = '', showLogo = false }) {
   };
   const onFormSubmit = (e) => {
     e.preventDefault();
-    // send state to server with e.g. `window.fetch`
   };
   return (
     <div className="flex w-screen bg-white items-center content-center justify-center">

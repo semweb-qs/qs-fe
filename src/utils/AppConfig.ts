@@ -1,7 +1,6 @@
 export const AppConfig = {
-  site_name: 'qmedigle-fe',
-  title: 'QMedigle: MedLine Information Retrieval',
-  description:
-    'QMedigle is a Web MedLine Information Retrieval Dataset Search Engine',
+  site_name: 'qs-fe',
+  title: 'QS World Semantic Web',
+  description: 'QS World Semantic Web is a knowledge graph based search engine',
   locale: 'en',
 };

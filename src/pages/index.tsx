@@ -13,8 +13,8 @@ const Index = () => {
     <Main
       meta={
         <Meta
-          title="MedLine Search Engine"
-          description="MedLine Search Engine Homepage"
+          title="QS World Search Engine"
+          description="QS World Search Engine Homepage"
         />
       }
     >

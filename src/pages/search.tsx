@@ -42,7 +42,7 @@ const Search = () => {
   return (
     <div id="base-div">
       <Main
-        meta={<Meta title="MedLine Search Engine" description={description} />}
+        meta={<Meta title="QS World Search Engine" description={description} />}
       >
         <div className="sticky top-0 flex flex-col items-center content-center justify-center">
           {/* Use router.basePath relatively */}
