@@ -11,8 +11,8 @@ import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
 import { AppConfig } from '@/utils/AppConfig';
 import { highlight, titleize } from '@/utils/highlight';
-import { getVocab } from '@/utils/sparql';
 import { emoji } from '@/utils/qol';
+import { getVocab } from '@/utils/sparql';
 
 const SEARCH_API = `${AppConfig.base_backend}/search`;
 
@@ -77,8 +77,10 @@ const Search = ({
                     key={idx}
                     title={`${label}`}
                     desc={highlighted}
-                    iri={`[${emoji[type]} ${type} :${val.id.split(' ')[0]}]`}
-                    url={`${router.basePath} /${val.id.split(' ')[0]}`}
+                    titleBold={`[${emoji[type]} ${type} :${
+                      val.id.split(' ')[0]
+                    }]`}
+                    url={iri}
                   ></SearchResultComponent>
                 );
               })}
