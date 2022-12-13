@@ -1,6 +1,5 @@
 import axios from 'axios';
 import Decimal from 'decimal.js';
-import { distance } from 'fastest-levenshtein';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
@@ -11,12 +10,19 @@ import SearchResultComponent from '@/components/SearchResultComponent';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
 import { AppConfig } from '@/utils/AppConfig';
-import { highlight } from '@/utils/highlight';
+import { highlight, titleize } from '@/utils/highlight';
+import { getVocab } from '@/utils/sparql';
+import { emoji } from '@/utils/qol';
 
 const SEARCH_API = `${AppConfig.base_backend}/search`;
-const SPELLCHECK_API = `${AppConfig.base_backend}/spellcheck`;
 
-const Search = ({ searchResult, spellcheck, showSpellcheck, duration }) => {
+const Search = ({
+  searchResult,
+  spellcheck,
+  showSpellcheck,
+  duration,
+  resultDesc,
+}) => {
   const router = useRouter();
   const [textFieldValue, setTextFieldValue] = useState('');
   const q = String(router.query.q);
@@ -61,14 +67,18 @@ const Search = ({ searchResult, spellcheck, showSpellcheck, duration }) => {
               className="flex flex-col gap-7 max-w-screen-md m-2 px-3 place-self-start"
             >
               {searchResult.map((val, idx) => {
-                const highlighted = highlight(val.excerpt, q);
+                const iri = getVocab(val.id.split(' ')[0]);
+                const label = resultDesc[iri];
+                const highlighted = highlight(label, q);
+                const type = titleize(val.id.split(' ')[1]);
                 return (
                   <SearchResultComponent
                     score={val.score}
                     key={idx}
-                    title={`Document with title: ${val.id}`}
+                    title={`${label}`}
                     desc={highlighted}
-                    url={`collection/${val.path}`}
+                    iri={`[${emoji[type]} ${type} :${val.id.split(' ')[0]}]`}
+                    url={`${router.basePath} /${val.id.split(' ')[0]}`}
                   ></SearchResultComponent>
                 );
               })}
@@ -81,7 +91,7 @@ const Search = ({ searchResult, spellcheck, showSpellcheck, duration }) => {
           </div>
         )}
         <div className="w-full flex justify-center text-center">
-          <Link scroll={false} href={`/search?q=${q}&k=${k + 10}`}>
+          <Link scroll={false} href={` / search ? q =${q}&k=${k + 10}`}>
             More result ▼
           </Link>
         </div>
@@ -102,13 +112,15 @@ export async function getServerSideProps(context) {
   const k = context.query.k ?? 10;
   const start = performance.now();
   let resultList = [];
+  let changed = false;
+  let spellcheckQuery = context.query.q;
+  let desc = {};
   try {
     const res = await axios.post(
       SEARCH_API,
       {
         content: context.query.q,
         k,
-        rerank: true,
       },
       {
         headers: {
@@ -117,37 +129,25 @@ export async function getServerSideProps(context) {
         },
       }
     );
-    if (res.data.results) resultList = res.data.results;
+    const tmp = [];
+    for (const des of res.data.desc) {
+      tmp.push([des['@id'], des[AppConfig.rdfsLabel][0]['@value']]);
+    }
+    desc = Object.fromEntries(tmp);
+    if (res.data.results) {
+      resultList = res.data.results;
+      spellcheckQuery = res.data.spell_checked;
+      changed = res.data.changed;
+    }
   } catch (e) {}
   const duration = performance.now() - start;
-
-  let spellcheckQuery = context.query.q;
-  let changed = false;
-  try {
-    const res = await axios.post(
-      SPELLCHECK_API,
-      {
-        content: context.query.q,
-        rerank: true,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept-Encoding': 'application/json',
-        },
-      }
-    );
-    // console.log(res.data)
-    if (res.data.spellcheck) spellcheckQuery = res.data.spellcheck;
-    if (res.data.changed) changed = res.data.changed;
-  } catch {}
-
   return {
     props: {
       searchResult: resultList,
       spellcheck: spellcheckQuery,
       showSpellcheck: changed,
       duration,
+      resultDesc: desc,
     },
   };
 }

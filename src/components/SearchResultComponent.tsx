@@ -4,7 +4,7 @@ import parse from 'html-react-parser';
 
 const MAX_DESC = 300;
 
-export default function SearchResultComponent({ url, title, desc, score }) {
+export default function SearchResultComponent({ url, title, desc, iri, score }) {
   // let showDesc = desc;
   // if (showDesc.length > MAX_DESC) {
   //   showDesc = showDesc.slice(0, MAX_DESC);
@@ -20,7 +20,7 @@ export default function SearchResultComponent({ url, title, desc, score }) {
       </div>
       <hr />
       <a href={url} className="arial text-xl m-0 p-0 text-amber-700 w-fit">
-        {title}
+        <strong>{iri}</strong> {title}
       </a>
       <div className="arial m-0 p-0 text-sm">{parse(desc)}</div>
     </div>

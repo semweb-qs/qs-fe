@@ -21,15 +21,6 @@ export default function BoxComponent({ name, url, query }) {
   const part = splitted[splitted.length - 2];
   const cid = splitted[splitted.length - 1];
   const [desc, setDesc] = useState('');
-  axios
-    .post(COLLECTION_API, {
-      part: `${part}`,
-      cid: `${cid}`,
-    })
-    .then((res) => {
-      setDesc(highlight(res.data.content, query));
-    });
-
   return (
     <Card className="lg:w-[40vw] z-[0] static h-fit p-3 m-3">
       <CardBody>
