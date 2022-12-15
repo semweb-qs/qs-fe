@@ -23,11 +23,13 @@
     "decimal.js": "^10.4.2",
     "fastest-levenshtein": "^1.0.16",
     "html-react-parser": "^3.0.4",
+    "n3": "^1.16.3",
     "next": "^13.0.0",
     "next-seo": "^5.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sanitize-html": "^2.7.3"
+    "sanitize-html": "^2.7.3",
+    "sparql-http-client": "^2.4.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",

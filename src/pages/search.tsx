@@ -1,8 +1,10 @@
 import axios from 'axios';
 import Decimal from 'decimal.js';
+import N3 from 'n3';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import ParsingClient from 'sparql-http-client/ParsingClient';
 
 import BoxComponent from '@/components/BoxComponent';
 import SearchBar from '@/components/SearchBar';
@@ -28,6 +30,43 @@ const Search = ({
   const q = String(router.query.q);
   const k = Number(router.query.k ?? 10);
   const description = `Search: ${q}`;
+  const fetcher = new ParsingClient({
+    endpointUrl: 'https://api-qs.hocky.id/bigdata/sparql',
+  });
+  const store = new N3.Store();
+  fetcher.query
+    .construct(
+      `
+      prefix : <http://qs.hocky.id/v/>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      prefix owl: <http://www.w3.org/2002/07/owl#>
+      prefix p: <https://qs.hocky.id/p/>
+      prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+      prefix vcard: <http://www.w3.org/2006/vcard/ns#>
+      prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+      
+      CONSTRUCT {
+        ?universityID ?prop ?val .
+        ?val rdfs:label ?valLabel .
+      } WHERE {
+        VALUES ?universityID { :Q1257946} .
+        ?universityID ?prop ?val .
+        OPTIONAL {
+          ?val rdfs:label ?valLabel .
+        }
+      }`
+    )
+    .then((val) => {
+      store.addQuads(val);
+      console.log(store);
+      const tmp = store.getQuads('http://qs.hocky.id/v/Q1257946');
+      console.log(tmp[0].subject.value);
+      console.log(tmp[0].predicate.value);
+      console.log(tmp[0].object.value);
+      // store.match('')
+      // store.add(val);
+    });
+  // tripleStream.on('data', (triple) => console.log(triple));
   return (
     <div id="base-div">
       <Main
