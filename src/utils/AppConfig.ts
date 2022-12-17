@@ -4,4 +4,5 @@ export const AppConfig = {
   description: 'QS World Semantic Web is a knowledge graph based search engine',
   locale: 'en',
   base_backend: 'http://localhost:8080',
+  sparql_backend: 'https://api-qs.hocky.id/bigdata/sparql',
 };
