@@ -5,4 +5,5 @@ export const AppConfig = {
   locale: 'en',
   base_backend: 'http://localhost:8080',
   sparql_backend: 'https://api-qs.hocky.id/bigdata/sparql',
+  sparql_wikidata: 'https://query.wikidata.org/sparql',
 };

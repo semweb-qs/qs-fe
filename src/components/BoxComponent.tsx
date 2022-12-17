@@ -5,11 +5,13 @@ import ParsingClient from 'sparql-http-client/ParsingClient';
 
 import { AppConfig } from '@/utils/AppConfig';
 import {
+  getIRILabelFromStore,
   getLabelFromStore,
   getProp,
   getPropFromStore,
-  getPropLabelFromStore,
   getVocab,
+  ignoredLabel,
+  ignoredPredicate,
 } from '@/utils/sparql';
 
 const initialInfoBox = {
@@ -43,18 +45,35 @@ export default function BoxComponent({ id, type }) {
           },
         ],
       };
-      console.log(ret);
       return ret;
     });
   };
-  const addAttributes = (attrKey, attrValue) => {
+  const addAttributes = (
+    attrKeyURL,
+    attrKeyLabel,
+    attrValueURL,
+    attrValueLabel
+  ) => {
     setInfoBox((oldValue) => {
-      return {
-        ...oldValue,
-        attributes: [...oldValue.attributes, [attrKey, attrValue]],
-      };
+      const newAttributes = [
+        ...oldValue.attributes,
+        [
+          {
+            url: attrKeyURL,
+            label: attrKeyLabel,
+          },
+          { url: attrValueURL, label: attrValueLabel },
+        ],
+      ];
+      newAttributes.sort((a, b) => {
+        if (a[0].label === b[0].label) return a[1].url > b[1].url ? -1 : 1;
+        return a[0].label < b[0].label ? -1 : 1;
+      });
+      return { ...oldValue, attributes: newAttributes };
     });
   };
+
+  const fillImage = () => {};
 
   useEffect(() => {
     setInfoBox(initialInfoBox);
@@ -89,18 +108,21 @@ export default function BoxComponent({ id, type }) {
         setInfoBox(initialInfoBox);
         store.addQuads(val);
         addInfoBox('title', getLabelFromStore(store, getVocab(id)));
-        addImage(
-          getPropFromStore(store, getVocab(id), getProp('hasLogo')),
-          'logo'
-        );
-        addAttributes('type', type);
+        fillImage();
+        addAttributes('', 'type', '', type);
         const availableProps = store.getQuads(getVocab(id));
         for (const prop of availableProps) {
-          addAttributes(
-            getPropLabelFromStore(store, prop.predicate.value),
-            prop.object.value
-          );
+          if (!(prop.predicate.value in ignoredPredicate)) {
+            const url = prop.object.datatype ? '' : prop.object.value;
+            addAttributes(
+              prop.predicate.value,
+              getIRILabelFromStore(store, prop.predicate.value),
+              url,
+              getIRILabelFromStore(store, prop.object.value, false)
+            );
+          }
         }
+        console.log(infoBox.attributes);
       });
   }, []);
   return (
@@ -133,9 +155,15 @@ export default function BoxComponent({ id, type }) {
         <div>
           {infoBox.attributes.map((el, i) => {
             return (
-              <div className="flex flex-row gap-3" key={i}>
-                <div className="w-auto font-bold">{el[0]}</div>
-                <div>{el[1]}</div>
+              <div className="grid grid-cols-2" key={i}>
+                <a href={el[0].url} className="w-auto font-bold">
+                  {el[0].label}
+                </a>
+                {el[1].url ? (
+                  <a href={el[1].url}>{el[1].label}</a>
+                ) : (
+                  <div>{el[1].label}</div>
+                )}
                 <hr />
               </div>
             );

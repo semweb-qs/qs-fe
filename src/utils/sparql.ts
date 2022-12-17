@@ -29,13 +29,16 @@ export const getPropFromStore = (n3store, iri, propIri) => {
   }
 };
 
-export const getPropLabelFromStore = (n3store, propIri) => {
+export const getIRILabelFromStore = (n3store, propIri, cutFallback = true) => {
   try {
     const matched = n3store.getQuads(propIri, sparqlTerms.rdfsLabel);
     return matched[0].object.value;
   } catch {
-    console.log(propIri.split('/'));
-    const iris = propIri.split('/').slice(-1)[0].split('#').slice(-1)[0];
-    return iris;
+    if (!cutFallback) {
+      return propIri;
+    }
+    return propIri.split('/').slice(-1)[0].split('#').slice(-1)[0];
   }
 };
+
+export const ignoredPredicate = new Set();
