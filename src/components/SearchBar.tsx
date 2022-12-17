@@ -6,7 +6,6 @@ import MedigleLogo from '@/components/MedigleLogo';
 import { useVoiceSearch } from '@/utils/instantSearchConnectors';
 
 export default function SearchBar(props) {
-  const router = useRouter();
   const [searchValue, setSearchValue] = useState('');
   const { query, refine, clear, isSearchStalled } = useSearchBox(props);
   const {
@@ -76,8 +75,8 @@ export default function SearchBar(props) {
               type="button"
               className="absolute inset-y-0 right-0 flex items-center pr-8"
               onClick={() => {
-                clear()
-                setSearchValue('')
+                clear();
+                setSearchValue('');
               }}
             >
               <svg

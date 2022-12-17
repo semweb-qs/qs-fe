@@ -1,3 +1,4 @@
+import Decimal from 'decimal.js';
 import { useRouter } from 'next/router';
 import React from 'react';
 import {
@@ -10,32 +11,11 @@ import {
 import TypesenseInstantSearchAdapter from 'typesense-instantsearch-adapter';
 
 import SearchBar from '@/components/SearchBar';
+import Stats from '@/components/Stats';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
 import { AppConfig } from '@/utils/AppConfig';
-import {useStats} from "@/utils/instantSearchConnectors";
-
-export function Stats(props) {
-  const {
-    hitsPerPage,
-    nbHits,
-    areHitsSorted,
-    nbSortedHits,
-    nbPages,
-    page,
-    processingTimeMS,
-    query,
-  } = useStats(props);
-
-  // console.log(processingTimeMS, nbHits);
-
-  return (
-    <div>
-      <p>{String(nbHits)}</p>
-      <p>{String(processingTimeMS)}</p>
-    </div>
-  );
-}
+import { useStats } from '@/utils/instantSearchConnectors';
 
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   server: {
