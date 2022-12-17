@@ -54,7 +54,7 @@ const Search = ({
             ms
           </div>
         </div>
-        {searchResult.length === 1 ? (
+        {searchResult.length === 0 ? (
           <div className="flex flex-col items-center justify-center">
             <img
               src={`${router.basePath}/assets/NotFoundCompressed.gif`}
@@ -87,7 +87,7 @@ const Search = ({
                 );
               })}
             </div>
-            <BoxComponent id={'Q160302'} type={'University'}></BoxComponent>
+            <BoxComponent id={'Q1257946'} type={'University'}></BoxComponent>
           </div>
         )}
         <div className="w-full flex justify-center text-center">
