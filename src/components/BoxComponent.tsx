@@ -73,7 +73,32 @@ export default function BoxComponent({ id, type }) {
     });
   };
 
-  const fillImage = () => {};
+  const fillImage = () => {
+    const fetcher = new ParsingClient({
+      endpointUrl: AppConfig.sparql_wikidata,
+    });
+    const store = new N3.Store();
+    fetcher.query
+      .select(
+        `SELECT ?label ?thumb WHERE {
+          VALUES ?ident{wd:${id}}.
+          ?ident rdfs:label ?label .		
+          ?ident wdt:P18 ?image .
+       
+          BIND(REPLACE(wikibase:decodeUri(STR(?image)), "http://commons.wikimedia.org/wiki/Special:FilePath/", "") as ?fileName) .
+          BIND(REPLACE(?fileName, " ", "_") as ?safeFileName)
+          BIND(MD5(?safeFileName) as ?fileNameMD5) .
+          BIND(CONCAT("https://upload.wikimedia.org/wikipedia/commons/thumb/", SUBSTR(?fileNameMD5, 1, 1), "/", SUBSTR(?fileNameMD5, 1, 2), "/", ?safeFileName, "/200px-", ?safeFileName) as ?thumb)
+            FILTER (lang(?label)="en")    
+        }`
+      )
+      .then((images) => {
+        store.addQuads(images);
+        for (const image of images) {
+          addImage(image.thumb.value, image.label.value);
+        }
+      });
+  };
 
   useEffect(() => {
     setInfoBox(initialInfoBox);
@@ -108,7 +133,6 @@ export default function BoxComponent({ id, type }) {
         setInfoBox(initialInfoBox);
         store.addQuads(val);
         addInfoBox('title', getLabelFromStore(store, getVocab(id)));
-        fillImage();
         addAttributes('', 'type', '', type);
         const availableProps = store.getQuads(getVocab(id));
         for (const prop of availableProps) {
@@ -122,7 +146,7 @@ export default function BoxComponent({ id, type }) {
             );
           }
         }
-        console.log(infoBox.attributes);
+        fillImage();
       });
   }, []);
   return (

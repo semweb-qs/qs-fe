@@ -87,7 +87,7 @@ const Search = ({
                 );
               })}
             </div>
-            <BoxComponent id={'Q534515'} type={'University'}></BoxComponent>
+            <BoxComponent id={'Q160302'} type={'University'}></BoxComponent>
           </div>
         )}
         <div className="w-full flex justify-center text-center">
