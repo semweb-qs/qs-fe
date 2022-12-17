@@ -90,7 +90,7 @@ const Search = ({
       >
         <div className="sticky z-[100] top-0 flex flex-col items-center content-center justify-center">
           <InstantSearch searchClient={searchClient} indexName="universities">
-            <SearchBar />
+            <SearchBar showLogo={true} />
             <Stats />
             <Hits hitComponent={Hit} />
           </InstantSearch>
