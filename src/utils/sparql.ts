@@ -11,5 +11,7 @@ export const getVocab = (iriBase) => {
 };
 
 export const getLabel = (n3store, iri) => {
-  return n3store.match(iri, sparqlTerms.rdfsLabel)[0].object.value;
+  const matched = n3store.getQuads(iri, sparqlTerms.rdfsLabel);
+  const label = matched[0].object.value;
+  return label;
 };

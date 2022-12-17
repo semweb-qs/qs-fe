@@ -20,23 +20,26 @@ import { getLabel, getVocab } from '@/utils/sparql';
 
 const COLLECTION_API = `${AppConfig.base_backend}/collection`;
 export default function BoxComponent({ id, type }) {
-  const fetcher = new ParsingClient({
-    endpointUrl: 'https://api-qs.hocky.id/bigdata/sparql',
-  });
-
   const [infoBox, setInfoBox] = useState({ title: '', desc: '' });
   const addInfoBox = (key, value) => {
     setInfoBox((oldValue) => {
-      return {
+      const ret = {
         ...oldValue,
-        key: value,
+        [key]: value,
       };
+      console.log(ret);
+      return ret;
     });
   };
-  const store = new N3.Store();
-  fetcher.query
-    .construct(
-      `
+  useEffect(() => {
+    const fetcher = new ParsingClient({
+      endpointUrl: 'https://api-qs.hocky.id/bigdata/sparql',
+    });
+
+    const store = new N3.Store();
+    fetcher.query
+      .construct(
+        `
       prefix : <http://qs.hocky.id/v/>
       prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       prefix owl: <http://www.w3.org/2002/07/owl#>
@@ -55,15 +58,16 @@ export default function BoxComponent({ id, type }) {
           ?val rdfs:label ?valLabel .
         }
       }`
-    )
-    .then((val) => {
-      store.addQuads(val);
-      console.log(store);
-      const tmp = store.getQuads(getVocab(id));
-      addInfoBox('title', getLabel(store, getVocab(id)));
-      // store.match('')
-      // store.add(val);
-    });
+      )
+      .then((val) => {
+        console.log(val);
+        store.addQuads(val);
+        console.log(store);
+        const tmp = store.getQuads(getVocab(id));
+        addInfoBox('title', getLabel(store, getVocab(id)));
+      });
+    console.log(infoBox);
+  }, []);
   return (
     <Card className="lg:w-[40vw] z-[0] static h-fit p-3 m-3">
       <CardBody>
