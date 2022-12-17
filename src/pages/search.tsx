@@ -14,7 +14,7 @@ import { Main } from '@/templates/Main';
 import { AppConfig } from '@/utils/AppConfig';
 import { highlight, titleize } from '@/utils/highlight';
 import { emoji } from '@/utils/qol';
-import { getVocab } from '@/utils/sparql';
+import { getLabel, getVocab, sparqlTerms } from '@/utils/sparql';
 
 const SEARCH_API = `${AppConfig.base_backend}/search`;
 
@@ -30,43 +30,6 @@ const Search = ({
   const q = String(router.query.q);
   const k = Number(router.query.k ?? 10);
   const description = `Search: ${q}`;
-  const fetcher = new ParsingClient({
-    endpointUrl: 'https://api-qs.hocky.id/bigdata/sparql',
-  });
-  const store = new N3.Store();
-  fetcher.query
-    .construct(
-      `
-      prefix : <http://qs.hocky.id/v/>
-      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      prefix owl: <http://www.w3.org/2002/07/owl#>
-      prefix p: <https://qs.hocky.id/p/>
-      prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-      prefix vcard: <http://www.w3.org/2006/vcard/ns#>
-      prefix xsd: <http://www.w3.org/2001/XMLSchema#>
-      
-      CONSTRUCT {
-        ?universityID ?prop ?val .
-        ?val rdfs:label ?valLabel .
-      } WHERE {
-        VALUES ?universityID { :Q1257946} .
-        ?universityID ?prop ?val .
-        OPTIONAL {
-          ?val rdfs:label ?valLabel .
-        }
-      }`
-    )
-    .then((val) => {
-      store.addQuads(val);
-      console.log(store);
-      const tmp = store.getQuads('http://qs.hocky.id/v/Q1257946');
-      console.log(tmp[0].subject.value);
-      console.log(tmp[0].predicate.value);
-      console.log(tmp[0].object.value);
-      // store.match('')
-      // store.add(val);
-    });
-  // tripleStream.on('data', (triple) => console.log(triple));
   return (
     <div id="base-div">
       <Main
@@ -91,7 +54,7 @@ const Search = ({
             ms
           </div>
         </div>
-        {searchResult.length === 0 ? (
+        {searchResult.length === 1 ? (
           <div className="flex flex-col items-center justify-center">
             <img
               src={`${router.basePath}/assets/NotFoundCompressed.gif`}
@@ -124,15 +87,11 @@ const Search = ({
                 );
               })}
             </div>
-            <BoxComponent
-              name={searchResult[0].id}
-              url={`${searchResult[0].path}`}
-              query={q}
-            ></BoxComponent>
+            <BoxComponent id={'Q1257946'} type={'University'}></BoxComponent>
           </div>
         )}
         <div className="w-full flex justify-center text-center">
-          <Link scroll={false} href={` / search ? q =${q}&k=${k + 10}`}>
+          <Link scroll={false} href={`/search?q=${q}&k=${k + 10}`}>
             More result ▼
           </Link>
         </div>
@@ -172,7 +131,7 @@ export async function getServerSideProps(context) {
     );
     const tmp = [];
     for (const des of res.data.desc) {
-      tmp.push([des['@id'], des[AppConfig.rdfsLabel][0]['@value']]);
+      tmp.push([des['@id'], des[sparqlTerms.rdfsLabel][0]['@value']]);
     }
     desc = Object.fromEntries(tmp);
     if (res.data.results) {
