@@ -2,7 +2,6 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import SearchBar from '@/components/SearchBar';
-import SearchResultComponent from '@/components/SearchResultComponent';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
 
@@ -13,8 +12,8 @@ const Index = () => {
     <Main
       meta={
         <Meta
-          title="QS World Search Engine"
-          description="QS World Search Engine Homepage"
+          title="QS World Deprecated Engine"
+          description="QS World Deprecated Engine Homepage"
         />
       }
     >
@@ -29,10 +28,6 @@ const Index = () => {
             alt={'Medigle logo'}
           ></img>
         </a>
-      </div>
-      <div className="flex flex-col items-center content-center justify-center">
-        {/* Use router.basePath relatively */}
-        <SearchBar></SearchBar>
       </div>
     </Main>
   );

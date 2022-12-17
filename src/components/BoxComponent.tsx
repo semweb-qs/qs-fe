@@ -7,10 +7,7 @@ import { AppConfig } from '@/utils/AppConfig';
 import {
   getIRILabelFromStore,
   getLabelFromStore,
-  getProp,
-  getPropFromStore,
   getVocab,
-  ignoredLabel,
   ignoredPredicate,
 } from '@/utils/sparql';
 

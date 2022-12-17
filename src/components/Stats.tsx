@@ -13,7 +13,7 @@ const Stats = (props) => {
     processingTimeMS,
     query,
   } = useStats(props);
-
+  const timeResult = Number(processingTimeMS);
   return (
     <div className="max-w-screen-md px-5 pt-4">
       {/* {showSpellcheck && ( */}
@@ -25,7 +25,7 @@ const Stats = (props) => {
       <div className="text-sm text-amber-800">
         Fetched results in:{' '}
         <span className="font-bold">
-          {new Decimal(processingTimeMS).toPrecision(4)}
+          {new Decimal(timeResult).toPrecision(4)}
         </span>{' '}
         ms
       </div>

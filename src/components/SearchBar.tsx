@@ -17,6 +17,7 @@ export default function SearchBar(props) {
   // console.log(voiceListeningState)
   useEffect(() => {
     try {
+      // @ts-ignore
       setSearchValue(voiceListeningState.transcript);
     } catch {}
   }, [voiceListeningState]);
@@ -98,6 +99,7 @@ export default function SearchBar(props) {
                 type="button"
                 className="absolute inset-y-0 right-0 flex items-center pr-3"
                 onClick={() => {
+                  // @ts-ignore
                   toggleListening();
                 }}
               >
