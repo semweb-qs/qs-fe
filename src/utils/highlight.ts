@@ -2,6 +2,24 @@ import { distance } from 'fastest-levenshtein';
 
 import { AppConfig } from '@/utils/AppConfig';
 
+const MAX_DESC = 500;
+
+export const cutDescription = (content) => {
+  let newContent = '';
+  const splitted = content.split(/(\s+)/);
+  for (const split of splitted) {
+    if (newContent !== '') newContent += '';
+    newContent += split;
+    if (newContent.length > MAX_DESC) {
+      newContent += ' ...';
+      break;
+    }
+  }
+  if (newContent.lastIndexOf('<mark>') > newContent.lastIndexOf('</mark>'))
+    newContent += '</mark>';
+  return newContent;
+};
+
 export const highlight = (content, q) => {
   try {
     const queries = q.split(/(\s+)/);
