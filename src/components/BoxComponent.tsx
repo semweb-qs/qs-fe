@@ -147,7 +147,7 @@ export default function BoxComponent({ id, type }) {
       });
   }, []);
   return (
-    <Card className="lg:w-[40vw] z-[0] static h-fit p-3 m-3">
+    <Card className="lg:w-[40vw] z-[0] static h-fit py-5 px-3">
       <CardHeader
         className="m-0"
         floated={false}
@@ -167,28 +167,35 @@ export default function BoxComponent({ id, type }) {
           })}
         </div>
         <div className="mx-3 flex gap-1 flex-col mb-2 mt-3">
-          <div className="font-bold text-3xl leading-none">{infoBox.title}</div>
-          <div>{type}</div>
+          <div className="font-bold text-lg md:text-xl leading-none">
+            {infoBox.title}
+          </div>
+          <div className="text-sm">{type}</div>
         </div>
       </CardHeader>
       <CardBody>
-        <div className="font-bold text-xl text-amber-600">📚 Top Result</div>
-        <div>
-          {infoBox.attributes.map((el, i) => {
-            return (
-              <div className="grid grid-cols-2" key={i}>
-                <a href={el[0].url} className="w-auto font-bold">
-                  {el[0].label}
-                </a>
-                {el[1].url ? (
-                  <a href={el[1].url}>{el[1].label}</a>
-                ) : (
-                  <div>{el[1].label}</div>
-                )}
-                <hr />
-              </div>
-            );
-          })}
+        <div className="font-bold text-amber-600">📚 Top Result</div>
+        <div className="text-xs">
+          <table className="table-fixed whitespace-pre-line break-all">
+            {infoBox.attributes.map((el, i) => {
+              return (
+                <tr key={i}>
+                  <td className="border border-y-{1} border-x-0 w-1/2 lg:w-40">
+                    <a href={el[0].url} className="w-auto font-bold ">
+                      {el[0].label}
+                    </a>
+                  </td>
+                  <td className="border border-y-{1}  border-x-0">
+                    {el[1].url ? (
+                      <a href={el[1].url}>{el[1].label}</a>
+                    ) : (
+                      <div>{el[1].label}</div>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </table>
         </div>
       </CardBody>
     </Card>

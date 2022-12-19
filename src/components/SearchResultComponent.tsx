@@ -14,9 +14,9 @@ export function OneResult({ url, title, desc, titleBold }) {
     "<span className='font-extrabold text-amber-800 bg-amber-50'>$1</span>"
   );
   return (
-    <div className="flex flex-col gap-2">
-      <div className="font-light text-gray-700 text-sm">{url}</div>
-      <hr />
+    <div className="flex flex-col gap-0 mb-3 mt-3 md:mr-2 w-full">
+      <div className="font-light text-gray-700 text-sm m-0 p-0">{url}</div>
+      <hr className={'m-0 p-0'} />
       <a href={url} className="arial text-xl m-0 p-0 text-amber-700 w-fit">
         <strong>{titleBold}</strong> {title}
       </a>

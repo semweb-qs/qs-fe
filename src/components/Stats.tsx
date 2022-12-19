@@ -15,7 +15,7 @@ const Stats = (props) => {
   } = useStats(props);
   const timeResult = Number(processingTimeMS);
   return (
-    <div className="max-w-screen-md px-5 pt-4">
+    <div className="max-w-screen-md pt-4">
       {/* {showSpellcheck && ( */}
       {/*  <div> */}
       {/*    Maybe, you mean: &quot; */}

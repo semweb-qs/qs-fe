@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, {useState} from 'react';
 import { Hits, InstantSearch } from 'react-instantsearch-hooks-web';
 import TypesenseInstantSearchAdapter from 'typesense-instantsearch-adapter';
 
+import BoxComponent from '@/components/BoxComponent';
 import SearchBar from '@/components/SearchBar';
 import { OneResult } from '@/components/SearchResultComponent';
 import Stats from '@/components/Stats';
@@ -48,20 +49,25 @@ const Hit = ({ hit }) => {
 
 const Search = () => {
   const router = useRouter();
-
+  const [topSearchID, setTopSearchID] = useState('');
   return (
     <div id="base-div">
       <Main
-        meta={
-          <Meta title="QS World Search Engine" description="QS World" />
-        }
+        meta={<Meta title="QS World Search Engine" description="QS World" />}
       >
         <InstantSearch searchClient={searchClient} indexName="universities">
           <div className="sticky z-[100] top-0 flex flex-col items-center content-center justify-center">
             <SearchBar showLogo />
           </div>
-          <Stats />
-          <Hits hitComponent={Hit} />
+          <div className="md:pl-4 mx-10">
+            <Stats />
+            <div className={'flex flex-col-reverse md:flex-row'}>
+              <div className={'w-full md:w-3/4 md:pr-4'}>
+                <Hits hitComponent={Hit} />
+              </div>
+              <BoxComponent id={'Q10159'} type={'University'} />
+            </div>
+          </div>
         </InstantSearch>
       </Main>
     </div>

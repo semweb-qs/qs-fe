@@ -17,7 +17,7 @@ const Main = (props: IMainProps) => {
       <div className="max-w-screen-xl">
         <div className="content w-full pb-5 text-xl">{props.children}</div>
 
-        <div className="border-t border-gray-300 py-8 text-center text-sm">
+        <div className="border-t border-gray-300 py-8 text-center text-sm px-4">
           © Copyright {new Date().getFullYear()} {AppConfig.title}. Made with{' '}
           <span role="img" aria-label="Love">
             ♥
