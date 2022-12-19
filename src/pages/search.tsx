@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Hits, InstantSearch } from 'react-instantsearch-hooks-web';
 import TypesenseInstantSearchAdapter from 'typesense-instantsearch-adapter';
 
 import BoxComponent from '@/components/BoxComponent';
 import SearchBar from '@/components/SearchBar';
-import { OneResult } from '@/components/SearchResultComponent';
+import { HitsResults, OneResult } from '@/components/SearchResultComponent';
 import Stats from '@/components/Stats';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
@@ -36,9 +36,11 @@ const SEARCH_API = `${AppConfig.base_backend}/search`;
 const Hit = ({ hit }) => {
   // eslint-disable-next-line no-underscore-dangle
   const desc = cutDescription(hit._highlightResult.description.value);
-
+  // eslint-disable-next-line no-underscore-dangle
+  const position = `result-${hit.__position}`;
   return (
     <OneResult
+      id={position}
       url={getVocab(hit.objectID)}
       title={hit.university}
       desc={desc}
@@ -49,7 +51,21 @@ const Hit = ({ hit }) => {
 
 const Search = () => {
   const router = useRouter();
-  const [topSearchID, setTopSearchID] = useState('');
+  const [boxID, setBoxID] = useState('Q10159');
+  const changeBox = () => {
+    try {
+      const topMost = document.getElementById('result-1');
+      const topSearch = topMost.getAttribute('data-id');
+      if (boxID !== topSearch) {
+        setBoxID(topSearch);
+      }
+    } catch {
+      setBoxID('');
+    }
+  };
+  useEffect(() => {
+    setInterval(changeBox, 1000);
+  }, []);
   return (
     <div id="base-div">
       <Main
@@ -61,11 +77,11 @@ const Search = () => {
           </div>
           <div className="md:pl-4 mx-10">
             <Stats />
-            <div className={'flex flex-col-reverse md:flex-row'}>
-              <div className={'w-full md:w-3/4 md:pr-4'}>
-                <Hits hitComponent={Hit} />
+            <div className={'flex flex-col-reverse md:flex-row justify-center'}>
+              <HitsResults />
+              <div id="box-component">
+                <BoxComponent boxID={boxID} type={'University'} />
               </div>
-              <BoxComponent id={'Q10159'} type={'University'} />
             </div>
           </div>
         </InstantSearch>

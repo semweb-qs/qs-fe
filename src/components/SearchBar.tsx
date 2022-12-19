@@ -1,13 +1,16 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { useSearchBox } from 'react-instantsearch-hooks-web';
+import { useInfiniteHits, useSearchBox } from 'react-instantsearch-hooks-web';
 
 import MedigleLogo from '@/components/MedigleLogo';
 import { useVoiceSearch } from '@/utils/instantSearchConnectors';
 
 export default function SearchBar(props) {
+  const { topSearch, setTopSearch } = props;
   const [searchValue, setSearchValue] = useState('');
-  const { query, refine, clear, isSearchStalled } = useSearchBox(props);
+  const { query, refine, clear, isSearchStalled } = useSearchBox(props, {
+    $$widgetType: 'custom.loadingIndicator',
+  });
   const {
     isBrowserSupported,
     isListening,
@@ -29,7 +32,6 @@ export default function SearchBar(props) {
   const handleChange = (event) => {
     setSearchValue(event.target.value);
     refine(searchValue);
-    localStorage.setItem('search', event.target.value);
   };
   return (
     <div className="z-50 flex w-screen bg-white items-center content-center justify-center overflow-hidden">

@@ -17,22 +17,21 @@ const initialInfoBox = {
   image: [],
   attributes: [],
 };
+
 const COLLECTION_API = `${AppConfig.base_backend}/collection`;
-export default function BoxComponent({ id, type }) {
+export default function BoxComponent({ boxID, type }) {
   const [infoBox, setInfoBox] = useState(initialInfoBox);
-  const [init, setInit] = useState(false);
   const addInfoBox = (key, value) => {
     setInfoBox((oldValue) => {
-      const ret = {
+      return {
         ...oldValue,
         [key]: value,
       };
-      return ret;
     });
   };
   const addImage = (imageSrc, imageAlt) => {
     setInfoBox((oldValue) => {
-      const ret = {
+      return {
         ...oldValue,
         image: [
           ...oldValue.image,
@@ -42,7 +41,6 @@ export default function BoxComponent({ id, type }) {
           },
         ],
       };
-      return ret;
     });
   };
   const addAttributes = (
@@ -78,7 +76,7 @@ export default function BoxComponent({ id, type }) {
     fetcher.query
       .select(
         `SELECT ?label ?thumb WHERE {
-          VALUES ?ident{wd:${id}}.
+          VALUES ?ident{wd:${boxID}}.
           ?ident rdfs:label ?label .		
           ?ident wdt:P18 ?image .
        
@@ -119,7 +117,7 @@ export default function BoxComponent({ id, type }) {
         ?id ?prop ?val .
         ?val rdfs:label ?valLabel .
       } WHERE {
-        VALUES ?id { :${id} } .
+        VALUES ?id { :${boxID} } .
         ?id ?prop ?val .
         OPTIONAL {
           ?val rdfs:label ?valLabel .
@@ -129,9 +127,9 @@ export default function BoxComponent({ id, type }) {
       .then((val) => {
         setInfoBox(initialInfoBox);
         store.addQuads(val);
-        addInfoBox('title', getLabelFromStore(store, getVocab(id)));
+        addInfoBox('title', getLabelFromStore(store, getVocab(boxID)));
         addAttributes('', 'type', '', type);
-        const availableProps = store.getQuads(getVocab(id));
+        const availableProps = store.getQuads(getVocab(boxID));
         for (const prop of availableProps) {
           if (!(prop.predicate.value in ignoredPredicate)) {
             const url = prop.object.datatype ? '' : prop.object.value;
@@ -145,9 +143,9 @@ export default function BoxComponent({ id, type }) {
         }
         fillImage();
       });
-  }, []);
-  return (
-    <Card className="lg:w-[40vw] z-[0] static h-fit py-5 px-3">
+  }, [boxID]);
+  return boxID !== '' ? (
+    <Card className="w-auto z-[0] static py-5 px-3">
       <CardHeader
         className="m-0"
         floated={false}
@@ -177,27 +175,31 @@ export default function BoxComponent({ id, type }) {
         <div className="font-bold text-amber-600">📚 Top Result</div>
         <div className="text-xs">
           <table className="table-fixed whitespace-pre-line break-all">
-            {infoBox.attributes.map((el, i) => {
-              return (
-                <tr key={i}>
-                  <td className="border border-y-{1} border-x-0 w-1/2 lg:w-40">
-                    <a href={el[0].url} className="w-auto font-bold ">
-                      {el[0].label}
-                    </a>
-                  </td>
-                  <td className="border border-y-{1}  border-x-0">
-                    {el[1].url ? (
-                      <a href={el[1].url}>{el[1].label}</a>
-                    ) : (
-                      <div>{el[1].label}</div>
-                    )}
-                  </td>
-                </tr>
-              );
-            })}
+            <tbody>
+              {infoBox.attributes.map((el, i) => {
+                return (
+                  <tr key={i}>
+                    <td className="border border-y-{1} border-x-0 w-1/2 lg:w-40">
+                      <a href={el[0].url} className="w-auto font-bold ">
+                        {el[0].label}
+                      </a>
+                    </td>
+                    <td className="border border-y-{1}  border-x-0">
+                      {el[1].url ? (
+                        <a href={el[1].url}>{el[1].label}</a>
+                      ) : (
+                        <div>{el[1].label}</div>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
           </table>
         </div>
       </CardBody>
     </Card>
+  ) : (
+    <div />
   );
 }
