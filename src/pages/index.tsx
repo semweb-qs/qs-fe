@@ -174,7 +174,7 @@ const Index = () => {
       >
         <div
           className={
-            'flex flex-row justify-center text-center font-bold text-lg sm:text-4xl'
+            'flex flex-row justify-center text-center font-bold text-2xl sm:text-4xl'
           }
         >
           <div
@@ -191,7 +191,7 @@ const Index = () => {
       <div className="flex justify-center text-center content-center max-w-screen-md w-full mx-auto">
         <a
           className={
-            'text-lg sm:text-2xl mt-10 font-bold shadow px-6 py-2 sm:px-10 sm:py-5 rounded-xl bg-amber-400 bg-opacity-30'
+            'text-xl sm:text-2xl mt-[10vh] font-bold shadow px-6 py-2 sm:px-10 sm:py-5 rounded-xl bg-amber-400 bg-opacity-30'
           }
           href={'/search'}
         >
