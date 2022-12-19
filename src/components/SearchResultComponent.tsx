@@ -50,8 +50,13 @@ export function HitsResults() {
       return (
         <div className={'w-full md:w-3/4 md:pr-10 justify-self-start'}>
           {hits.map((hit, i) => {
-            // eslint-disable-next-line no-underscore-dangle
-            const desc = cutDescription(hit._highlightResult.description.value);
+            let curDesc = '';
+            try {
+              // @ts-ignore
+              // eslint-disable-next-line no-underscore-dangle
+              curDesc = hit._highlightResult.description.value;
+            } catch {}
+            const desc = cutDescription(curDesc);
             // eslint-disable-next-line no-underscore-dangle
             const position = `result-${hit.__position}`;
             return (
