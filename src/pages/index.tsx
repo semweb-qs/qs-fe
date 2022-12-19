@@ -12,8 +12,8 @@ const Index = () => {
     <Main
       meta={
         <Meta
-          title="QS World Deprecated Engine"
-          description="QS World Deprecated Engine Homepage"
+          title="QS World Search Engine"
+          description="QS World Search Engine Homepage"
         />
       }
     >

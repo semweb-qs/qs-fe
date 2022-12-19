@@ -53,7 +53,7 @@ const Search = () => {
     <div id="base-div">
       <Main
         meta={
-          <Meta title="QS World Deprecated Engine" description="QS World" />
+          <Meta title="QS World Search Engine" description="QS World" />
         }
       >
         <InstantSearch searchClient={searchClient} indexName="universities">
