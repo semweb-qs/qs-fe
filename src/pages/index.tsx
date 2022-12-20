@@ -9,112 +9,11 @@ import Typed from 'typed.js';
 import SearchBar from '@/components/SearchBar';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
-
-const tmp = {
-  particles: {
-    number: {
-      value: 50,
-      density: {
-        enable: true,
-        value_area: 900,
-      },
-    },
-    color: {
-      value: '#d97006',
-    },
-    shape: {
-      type: 'circle',
-      stroke: {
-        width: 0,
-        color: '#000000',
-      },
-      polygon: {
-        nb_sides: 5,
-      },
-    },
-    opacity: {
-      value: 0.3,
-      random: false,
-      anim: {
-        enable: false,
-        speed: 0.1,
-        opacity_min: 0.1,
-        sync: false,
-      },
-    },
-    size: {
-      value: 6,
-      random: true,
-      anim: {
-        enable: false,
-        speed: 10,
-        size_min: 0.1,
-        sync: false,
-      },
-    },
-    line_linked: {
-      enable: true,
-      distance: 150,
-      color: '#d97006',
-      opacity: 0.4,
-      width: 1,
-    },
-    move: {
-      enable: true,
-      speed: 1,
-      direction: 'none',
-      random: false,
-      straight: false,
-      out_mode: 'out',
-      bounce: false,
-      attract: {
-        enable: false,
-        rotateX: 600,
-        rotateY: 1200,
-      },
-    },
-  },
-  interactivity: {
-    detect_on: 'window',
-    events: {
-      onhover: {
-        enable: true,
-        mode: 'grab',
-      },
-      onclick: {
-        enable: true,
-        mode: 'push',
-      },
-      resize: true,
-    },
-    modes: {
-      grab: {
-        distance: 140,
-        line_linked: {
-          opacity: 1,
-        },
-      },
-      push: {
-        particles_nb: 2,
-      },
-    },
-  },
-  retina_detect: true,
-};
-
-const typedOptions = {
-  strings: ['<i>First</i> sentence.', '&amp; a second sentence.'],
-  typeSpeed: 40,
-};
+import { particlesConfig } from '@/utils/particlesConfig';
 
 const Index = () => {
   const router = useRouter();
   const particlesInit = useCallback(async (engine: Engine) => {
-    console.log(engine);
-
-    // you can initialize the tsParticles instance (engine) here, adding custom shapes or presets
-    // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
-    // starting from v2 you can add only the features you need reducing the bundle size
     await loadFull(engine);
   }, []);
 
@@ -131,12 +30,6 @@ const Index = () => {
     };
   }, []);
 
-  const particlesLoaded = useCallback(
-    async (container: Container | undefined) => {
-      await console.log(container);
-    },
-    []
-  );
   return (
     <Main
       meta={
@@ -150,10 +43,9 @@ const Index = () => {
         className={'z-[-1] fixed'}
         id="tsparticles"
         init={particlesInit}
-        loaded={particlesLoaded}
         /*
             // @ts-ignore */
-        options={tmp}
+        options={particlesConfig}
       />
       <div className="flex justify-center text-center content-center max-w-screen-md w-full mx-auto">
         <a
@@ -191,7 +83,7 @@ const Index = () => {
       <div className="flex justify-center text-center content-center max-w-screen-md w-full mx-auto">
         <a
           className={
-            'text-xl sm:text-2xl mt-[10vh] font-bold shadow px-6 py-2 sm:px-10 sm:py-5 rounded-xl bg-amber-400 bg-opacity-30'
+            'text-xl sm:text-2xl mt-[10vh] font-bold shadow px-6 py-2 sm:px-10 sm:py-5 rounded-xl bg-amber-400/30'
           }
           href={'/search'}
         >

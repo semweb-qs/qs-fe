@@ -5,15 +5,19 @@ import ParsingClient from 'sparql-http-client/ParsingClient';
 
 import { AppConfig } from '@/utils/AppConfig';
 import {
+  getIRIEnding,
   getIRILabelFromStore,
   getLabelFromStore,
+  getPropFromStore,
   getVocab,
   ignoredPredicate,
+  sparqlTerms,
 } from '@/utils/sparql';
 
 const initialInfoBox = {
   title: '',
   desc: '',
+  type: '',
   image: [],
   attributes: [],
 };
@@ -96,6 +100,7 @@ export default function BoxComponent({ boxID, type }) {
   };
 
   useEffect(() => {
+    if (!boxID) return;
     setInfoBox(initialInfoBox);
     const fetcher = new ParsingClient({
       endpointUrl: AppConfig.sparql_backend,
@@ -127,8 +132,27 @@ export default function BoxComponent({ boxID, type }) {
       .then((val) => {
         setInfoBox(initialInfoBox);
         store.addQuads(val);
+        console.log(
+          getIRIEnding(
+            getPropFromStore(
+              store,
+              getVocab(boxID),
+              `${sparqlTerms.rdfLabel}type`
+            )
+          )
+        );
+        addInfoBox(
+          'type',
+          getIRIEnding(
+            getPropFromStore(
+              store,
+              getVocab(boxID),
+              `${sparqlTerms.rdfLabel}type`
+            )
+          )
+        );
         addInfoBox('title', getLabelFromStore(store, getVocab(boxID)));
-        addAttributes('', 'type', '', type);
+        // addAttributes('', 'type', '', type);
         const availableProps = store.getQuads(getVocab(boxID));
         for (const prop of availableProps) {
           if (!(prop.predicate.value in ignoredPredicate)) {
@@ -168,7 +192,9 @@ export default function BoxComponent({ boxID, type }) {
           <div className="font-bold text-lg md:text-xl leading-none">
             {infoBox.title}
           </div>
-          <div className="text-sm">{type}</div>
+          <div className="text-sm">
+            {infoBox.type === '' ? type : infoBox.type}
+          </div>
         </div>
       </CardHeader>
       <CardBody>

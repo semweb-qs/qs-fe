@@ -2,6 +2,7 @@ export const sparqlTerms = {
   rdfsLabel: 'http://www.w3.org/2000/01/rdf-schema#label',
   baseVocab: 'http://qs.hocky.id/v/',
   baseProp: 'https://qs.hocky.id/p/',
+  rdfLabel: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
 };
 
 export const getVocab = (iriBase) => {
@@ -9,6 +10,10 @@ export const getVocab = (iriBase) => {
 };
 export const getProp = (iriBase) => {
   return `${sparqlTerms.baseProp}${iriBase.trim(':')}`;
+};
+
+export const getIRIEnding = (iri) => {
+  return iri.split('/').slice(-1)[0].split('#').slice(-1)[0];
 };
 
 export const getLabelFromStore = (n3store, iri) => {
