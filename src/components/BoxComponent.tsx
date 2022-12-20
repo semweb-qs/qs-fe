@@ -122,7 +122,7 @@ export default function BoxComponent({ isVocab, boxID, type }) {
         ?id ?prop ?val .
         ?val rdfs:label ?valLabel .
       } WHERE {
-        VALUES ?id { ${isVocab ? '' : 'v'}:${boxID} } .
+        VALUES ?id { ${isVocab ? '' : 'p'}:${boxID} } .
         ?id ?prop ?val .
         OPTIONAL {
           ?val rdfs:label ?valLabel .
