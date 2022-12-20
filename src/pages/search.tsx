@@ -80,7 +80,11 @@ const Search = () => {
             <div className={'flex flex-col-reverse md:flex-row justify-center'}>
               <HitsResults />
               <div id="box-component">
-                <BoxComponent boxID={boxID} type={'University'} />
+                <BoxComponent
+                  isVocab={true}
+                  boxID={boxID}
+                  type={'University'}
+                />
               </div>
             </div>
           </div>

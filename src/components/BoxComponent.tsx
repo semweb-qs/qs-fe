@@ -9,6 +9,7 @@ import {
   getIRILabelFromStore,
   getLabelFromStore,
   getPropFromStore,
+  getQS,
   getVocab,
   ignoredPredicate,
   sparqlTerms,
@@ -23,7 +24,7 @@ const initialInfoBox = {
 };
 
 const COLLECTION_API = `${AppConfig.base_backend}/collection`;
-export default function BoxComponent({ boxID, type }) {
+export default function BoxComponent({ isVocab, boxID, type }) {
   const [infoBox, setInfoBox] = useState(initialInfoBox);
   const addInfoBox = (key, value) => {
     setInfoBox((oldValue) => {
@@ -105,7 +106,6 @@ export default function BoxComponent({ boxID, type }) {
     const fetcher = new ParsingClient({
       endpointUrl: AppConfig.sparql_backend,
     });
-
     const store = new N3.Store();
     fetcher.query
       .construct(
@@ -122,7 +122,7 @@ export default function BoxComponent({ boxID, type }) {
         ?id ?prop ?val .
         ?val rdfs:label ?valLabel .
       } WHERE {
-        VALUES ?id { :${boxID} } .
+        VALUES ?id { ${isVocab ? '' : 'v'}:${boxID} } .
         ?id ?prop ?val .
         OPTIONAL {
           ?val rdfs:label ?valLabel .
@@ -132,28 +132,19 @@ export default function BoxComponent({ boxID, type }) {
       .then((val) => {
         setInfoBox(initialInfoBox);
         store.addQuads(val);
-        console.log(
-          getIRIEnding(
-            getPropFromStore(
-              store,
-              getVocab(boxID),
-              `${sparqlTerms.rdfLabel}type`
-            )
-          )
-        );
         addInfoBox(
           'type',
           getIRIEnding(
             getPropFromStore(
               store,
-              getVocab(boxID),
+              getQS(boxID, isVocab),
               `${sparqlTerms.rdfLabel}type`
             )
           )
         );
-        addInfoBox('title', getLabelFromStore(store, getVocab(boxID)));
+        addInfoBox('title', getLabelFromStore(store, getQS(boxID, isVocab)));
         // addAttributes('', 'type', '', type);
-        const availableProps = store.getQuads(getVocab(boxID));
+        const availableProps = store.getQuads(getQS(boxID, isVocab));
         for (const prop of availableProps) {
           if (!(prop.predicate.value in ignoredPredicate)) {
             const url = prop.object.datatype ? '' : prop.object.value;

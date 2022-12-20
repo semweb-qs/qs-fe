@@ -38,7 +38,11 @@ const Vocabulary = () => {
           'flex w-[70vw] max-w-xl justify-center content-center align-middle mx-auto my-10'
         }
       >
-        <BoxComponent boxID={vocabID} type={'Vocabulary Type'}></BoxComponent>
+        <BoxComponent
+          isVocab={true}
+          boxID={vocabID}
+          type={'Vocabulary Type'}
+        ></BoxComponent>
       </div>
     </Main>
   );

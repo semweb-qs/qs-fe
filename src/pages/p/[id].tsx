@@ -38,7 +38,11 @@ const PropertyBase = () => {
           'flex w-[70vw] max-w-xl justify-center content-center align-middle mx-auto my-10'
         }
       >
-        <BoxComponent boxID={vocabID} type={'PropertyBase Type'}></BoxComponent>
+        <BoxComponent
+          isVocab={false}
+          boxID={vocabID}
+          type={'PropertyBase Type'}
+        ></BoxComponent>
       </div>
     </Main>
   );

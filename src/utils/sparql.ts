@@ -11,6 +11,10 @@ export const getVocab = (iriBase) => {
 export const getProp = (iriBase) => {
   return `${sparqlTerms.baseProp}${iriBase.trim(':')}`;
 };
+export const getQS = (iriBase, isVocab) => {
+  if (isVocab) return getVocab(iriBase);
+  return getProp(iriBase);
+};
 
 export const getIRIEnding = (iri) => {
   return iri.split('/').slice(-1)[0].split('#').slice(-1)[0];
