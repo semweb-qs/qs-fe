@@ -14,17 +14,10 @@ const PropertyBase = () => {
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadFull(engine);
   }, []);
-  const vocabID = router.query.id;
-
+  const propertyID = router.query.id;
+  const desc = `QS World - Property Page for ${propertyID}`;
   return (
-    <Main
-      meta={
-        <Meta
-          title="QS World Search Engine"
-          description="QS World Search Engine Homepage"
-        />
-      }
-    >
+    <Main meta={<Meta title="QS World Semantic Web" description={desc} />}>
       <Particles
         className={'z-[-1] fixed'}
         id="tsparticles"
@@ -40,7 +33,7 @@ const PropertyBase = () => {
       >
         <BoxComponent
           isVocab={false}
-          boxID={vocabID}
+          boxID={propertyID}
           type={'PropertyBase Type'}
         ></BoxComponent>
       </div>

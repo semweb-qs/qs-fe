@@ -15,16 +15,10 @@ const Vocabulary = () => {
     await loadFull(engine);
   }, []);
   const vocabID = router.query.id;
+  const desc = `QS World - Vocabulary Page for ${vocabID}`;
 
   return (
-    <Main
-      meta={
-        <Meta
-          title="QS World Search Engine"
-          description="QS World Search Engine Homepage"
-        />
-      }
-    >
+    <Main meta={<Meta title="QS World Semantic Web" description={desc} />}>
       <Particles
         className={'z-[-1] fixed'}
         id="tsparticles"
