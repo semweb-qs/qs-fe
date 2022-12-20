@@ -69,7 +69,7 @@ const Search = () => {
   return (
     <div id="base-div">
       <Main
-        meta={<Meta title="QS World Search Engine" description="QS World" />}
+        meta={<Meta title="QS World Search Engine" description="QS World searching page" />}
       >
         <InstantSearch searchClient={searchClient} indexName="universities">
           <div className="sticky z-[100] top-0 flex flex-col items-center content-center justify-center">

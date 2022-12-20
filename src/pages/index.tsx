@@ -34,7 +34,7 @@ const Index = () => {
     <Main
       meta={
         <Meta
-          title="QS World Search Engine"
+          title="QS World Semantic Web"
           description="QS World Search Engine Homepage"
         />
       }
