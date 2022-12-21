@@ -48,7 +48,7 @@ export function HitsResults() {
   if (!isSearchStalled) {
     if (hits.length !== 0) {
       return (
-        <div className={'w-full md:w-3/4 md:pr-10 justify-self-start'}>
+        <div className={'w-full md:pr-10 justify-self-start'}>
           {hits.map((hit, i) => {
             let curDesc = '';
             try {
@@ -74,7 +74,7 @@ export function HitsResults() {
       );
     }
     return (
-      <div className="flex flex-col items-center justify-center">
+      <div className="w-full flex flex-col items-center justify-center">
         <img
           src={`${router.basePath}/assets/NotFoundCompressed.gif`}
           alt={'Not Found logo'}

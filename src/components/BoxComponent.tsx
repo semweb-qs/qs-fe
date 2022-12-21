@@ -25,7 +25,8 @@ const initialInfoBox = {
 };
 
 const COLLECTION_API = `${AppConfig.base_backend}/collection`;
-export default function BoxComponent({ isVocab, boxID, type }) {
+export default function BoxComponent(props) {
+  const { isVocab, boxID, type, fromSearch } = props;
   const [infoBox, setInfoBox] = useState(initialInfoBox);
   const addInfoBox = (key, value) => {
     setInfoBox((oldValue) => {
@@ -210,7 +211,11 @@ export default function BoxComponent({ isVocab, boxID, type }) {
       });
   }, [boxID]);
   return boxID !== '' ? (
-    <Card className="w-fit z-[0] static py-5 px-3">
+    <Card
+      className={` ${
+        fromSearch ? 'md:w-[30vw]' : 'md:w-full'
+      } z-[0] static py-5 px-3`}
+    >
       <CardHeader
         className="m-0"
         floated={false}

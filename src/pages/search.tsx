@@ -67,8 +67,9 @@ const Search = () => {
             <Stats />
             <div className={'flex flex-col-reverse md:flex-row justify-center'}>
               <HitsResults />
-              <div id="box-component" className={'w-full md:w-[40vw]'}>
+              <div id="box-component" className={''}>
                 <BoxComponent
+                  fromSearch={true}
                   isVocab={true}
                   boxID={boxID}
                   type={'University'}
