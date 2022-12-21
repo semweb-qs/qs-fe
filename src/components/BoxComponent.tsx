@@ -213,7 +213,7 @@ export default function BoxComponent(props) {
   }, [boxID]);
   return boxID !== '' ? (
     <Card
-      className={` ${
+      className={`w-[80vw] ${
         fromSearch ? 'md:w-[30vw]' : 'md:w-full'
       } z-[0] static py-5 px-3`}
     >
