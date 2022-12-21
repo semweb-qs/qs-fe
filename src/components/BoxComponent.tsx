@@ -11,6 +11,7 @@ import {
   getPropFromStore,
   getQS,
   getVocab,
+  getWikidataIfExist,
   ignoredPredicate,
   isInferredFromSameAs,
   sparqlTerms,
@@ -75,7 +76,7 @@ export default function BoxComponent(props) {
     });
   };
 
-  const fillImage = () => {
+  const fillImage = (quads) => {
     const fetcher = new ParsingClient({
       endpointUrl: AppConfig.sparql_dbpedia,
     });
@@ -86,7 +87,7 @@ export default function BoxComponent(props) {
           PREFIX wikibase: <http://wikiba.se/ontology#>
           
           SELECT ?label ?thumb WHERE {
-            VALUES ?wd{ wd:${boxID} } .
+            VALUES ?wd{ <${getWikidataIfExist(quads, getVocab(boxID))}> } .
             ?ident owl:sameAs ?wd .
             ?ident rdfs:label ?label .
             ?ident foaf:depiction ?image .
@@ -120,7 +121,7 @@ export default function BoxComponent(props) {
     fetcher2.query
       .select(
         `SELECT ?label ?thumb WHERE {
-          VALUES ?ident{wd:${boxID}}.
+          VALUES ?ident{<${getWikidataIfExist(quads, getVocab(boxID))}>}.
           ?ident rdfs:label ?label .
           ?ident wdt:P18 ?image .
         
@@ -207,7 +208,7 @@ export default function BoxComponent(props) {
             );
           }
         }
-        fillImage();
+        fillImage(store);
       });
   }, [boxID]);
   return boxID !== '' ? (

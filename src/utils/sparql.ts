@@ -17,7 +17,6 @@ export const getQS = (iriBase, isVocab) => {
   if (isVocab) return getVocab(iriBase);
   return getProp(iriBase);
 };
-
 export const getIRIEnding = (iri) => {
   return iri.split('/').slice(-1)[0].split('#').slice(-1)[0];
 };
@@ -57,6 +56,11 @@ export const getIRILabelFromStore = (n3store, propIri, cutFallback = true) => {
     }
     return propIri.split('/').slice(-1)[0].split('#').slice(-1)[0];
   }
+};
+
+export const getWikidataIfExist = (store, iri) => {
+  const ret = getPropFromStore(store, iri, `${sparqlTerms.owl}sameAs`);
+  return ret !== '' ? ret : iri;
 };
 
 export const ignoredPredicate = new Set();
