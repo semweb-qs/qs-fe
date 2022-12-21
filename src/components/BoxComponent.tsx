@@ -76,21 +76,67 @@ export default function BoxComponent({ isVocab, boxID, type }) {
 
   const fillImage = () => {
     const fetcher = new ParsingClient({
-      endpointUrl: AppConfig.sparql_wikidata,
+      endpointUrl: AppConfig.sparql_dbpedia,
     });
     const store = new N3.Store();
     fetcher.query
       .select(
+        `prefix wd: <http://www.wikidata.org/entity/>
+          PREFIX wikibase: <http://wikiba.se/ontology#>
+          
+          SELECT ?label ?thumb WHERE {
+            VALUES ?wd{ wd:${boxID} } .
+            ?ident owl:sameAs ?wd .
+            ?ident rdfs:label ?label .
+            ?ident foaf:depiction ?image .
+            BIND(
+              REPLACE((STR(?image)), "http://commons.wikimedia.org/wiki/Special:FilePath/", "")
+              as ?fileName
+            ) .
+            BIND(REPLACE(?fileName, " ", "_") as ?safeFileName)
+            BIND(MD5(?safeFileName) as ?fileNameMD5) .
+            BIND(
+              CONCAT("https://upload.wikimedia.org/wikipedia/commons/thumb/",
+                      SUBSTR(?fileNameMD5, 1, 1),
+                      "/",
+                      SUBSTR(?fileNameMD5, 1, 2),
+                      "/",
+                      ?safeFileName, "/200px-", ?safeFileName)
+              as ?thumb
+            )
+            FILTER (lang(?label)="en")
+          }`
+      )
+      .then((images) => {
+        store.addQuads(images);
+        for (const image of images) {
+          addImage(image.thumb.value, image.label.value);
+        }
+      });
+    const fetcher2 = new ParsingClient({
+      endpointUrl: AppConfig.sparql_wikidata,
+    });
+    fetcher2.query
+      .select(
         `SELECT ?label ?thumb WHERE {
           VALUES ?ident{wd:${boxID}}.
-          ?ident rdfs:label ?label .		
+          ?ident rdfs:label ?label .
           ?ident wdt:P18 ?image .
-       
-          BIND(REPLACE(wikibase:decodeUri(STR(?image)), "http://commons.wikimedia.org/wiki/Special:FilePath/", "") as ?fileName) .
+        
+          BIND(
+            REPLACE(wikibase:decodeUri(STR(?image)),
+              "http://commons.wikimedia.org/wiki/Special:FilePath/", "")
+            as ?fileName
+          ) .
           BIND(REPLACE(?fileName, " ", "_") as ?safeFileName)
           BIND(MD5(?safeFileName) as ?fileNameMD5) .
-          BIND(CONCAT("https://upload.wikimedia.org/wikipedia/commons/thumb/", SUBSTR(?fileNameMD5, 1, 1), "/", SUBSTR(?fileNameMD5, 1, 2), "/", ?safeFileName, "/200px-", ?safeFileName) as ?thumb)
-            FILTER (lang(?label)="en")    
+          BIND(
+            CONCAT("https://upload.wikimedia.org/wikipedia/commons/thumb/",
+                    SUBSTR(?fileNameMD5, 1, 1), "/",
+                    SUBSTR(?fileNameMD5, 1, 2), "/", ?safeFileName, "/200px-", ?safeFileName)
+            as ?thumb
+          )
+          FILTER (lang(?label)="en")
         }`
       )
       .then((images) => {
@@ -164,7 +210,7 @@ export default function BoxComponent({ isVocab, boxID, type }) {
       });
   }, [boxID]);
   return boxID !== '' ? (
-    <Card className="w-auto z-[0] static py-5 px-3">
+    <Card className="w-fit z-[0] static py-5 px-3">
       <CardHeader
         className="m-0"
         floated={false}
@@ -179,6 +225,11 @@ export default function BoxComponent({ isVocab, boxID, type }) {
                 alt={el.alt}
                 className="h-28 w-auto object-cover object-top"
                 key={i}
+                onError={(event) => {
+                  // @ts-ignore
+                  // eslint-disable-next-line no-param-reassign
+                  event.target.style.display = 'none';
+                }}
               ></img>
             );
           })}

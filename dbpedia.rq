@@ -1,0 +1,26 @@
+prefix wd: <http://www.wikidata.org/entity/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+
+SELECT ?label ?thumb WHERE {
+  VALUES ?wd{ wd:Q534515} .
+  ?ident owl:sameAs ?wd .
+  ?ident rdfs:label ?label .
+  ?ident foaf:depiction ?image .
+  BIND(
+    REPLACE((STR(?image)), "http://commons.wikimedia.org/wiki/Special:FilePath/", "")
+    as ?fileName
+  ) .
+  BIND(REPLACE(?fileName, " ", "_") as ?safeFileName)
+  BIND(MD5(?safeFileName) as ?fileNameMD5) .
+  BIND(
+    CONCAT("https://upload.wikimedia.org/wikipaedia/commons/thumb/",
+            SUBSTR(?fileNameMD5, 1, 1),
+            "/",
+            SUBSTR(?fileNameMD5, 1, 2),
+            "/",
+            ?safeFileName, "/200px-", ?safeFileName)
+    as ?thumb
+  )
+  FILTER (lang(?label)="en")
+}
+
