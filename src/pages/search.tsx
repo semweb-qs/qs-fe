@@ -5,6 +5,7 @@ import TypesenseInstantSearchAdapter from 'typesense-instantsearch-adapter';
 
 import BoxComponent from '@/components/BoxComponent';
 import SearchBar from '@/components/SearchBar';
+import SearchErrorToast from '@/components/SearchError';
 import { HitsResults, OneResult } from '@/components/SearchResultComponent';
 import Stats from '@/components/Stats';
 import { Meta } from '@/layouts/Meta';
@@ -75,6 +76,7 @@ const Search = () => {
               </div>
             </div>
           </div>
+          <SearchErrorToast />
         </InstantSearch>
       </Main>
     </div>
