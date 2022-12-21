@@ -3,6 +3,8 @@ export const sparqlTerms = {
   baseVocab: 'http://qs.hocky.id/v/',
   baseProp: 'https://qs.hocky.id/p/',
   rdfLabel: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+  wikidata: 'http://www.wikidata.org/entity/',
+  owl: 'https://www.w3.org/2002/07/owl#',
 };
 
 export const getVocab = (iriBase) => {
@@ -18,6 +20,13 @@ export const getQS = (iriBase, isVocab) => {
 
 export const getIRIEnding = (iri) => {
   return iri.split('/').slice(-1)[0].split('#').slice(-1)[0];
+};
+
+export const isInferredFromSameAs = (quad) => {
+  return (
+    quad.predicate.value != `${sparqlTerms.owl}sameAs` &&
+    quad.object.value.startsWith(sparqlTerms.wikidata)
+  );
 };
 
 export const getLabelFromStore = (n3store, iri) => {

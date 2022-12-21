@@ -12,6 +12,7 @@ import {
   getQS,
   getVocab,
   ignoredPredicate,
+  isInferredFromSameAs,
   sparqlTerms,
 } from '@/utils/sparql';
 
@@ -146,7 +147,10 @@ export default function BoxComponent({ isVocab, boxID, type }) {
         // addAttributes('', 'type', '', type);
         const availableProps = store.getQuads(getQS(boxID, isVocab));
         for (const prop of availableProps) {
-          if (!(prop.predicate.value in ignoredPredicate)) {
+          if (
+            !(prop.predicate.value in ignoredPredicate) &&
+            !isInferredFromSameAs(prop)
+          ) {
             const url = prop.object.datatype ? '' : prop.object.value;
             addAttributes(
               prop.predicate.value,

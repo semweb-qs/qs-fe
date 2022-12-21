@@ -1,4 +1,3 @@
-import * as Toast from '@radix-ui/react-toast';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useInstantSearch } from 'react-instantsearch-hooks-web';
