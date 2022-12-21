@@ -24,7 +24,7 @@ export const getIRIEnding = (iri) => {
 
 export const isInferredFromSameAs = (quad) => {
   return (
-    quad.predicate.value != `${sparqlTerms.owl}sameAs` &&
+    quad.predicate.value !== `${sparqlTerms.owl}sameAs` &&
     quad.object.value.startsWith(sparqlTerms.wikidata)
   );
 };
