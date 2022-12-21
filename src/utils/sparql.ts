@@ -4,7 +4,7 @@ export const sparqlTerms = {
   baseProp: 'https://qs.hocky.id/p/',
   rdfLabel: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
   wikidata: 'http://www.wikidata.org/entity/',
-  owl: 'https://www.w3.org/2002/07/owl#',
+  owl: 'http://www.w3.org/2002/07/owl#',
 };
 
 export const getVocab = (iriBase) => {
