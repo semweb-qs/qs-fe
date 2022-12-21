@@ -31,24 +31,6 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
 });
 const { searchClient } = typesenseInstantsearchAdapter;
 
-const SEARCH_API = `${AppConfig.base_backend}/search`;
-
-const Hit = ({ hit }) => {
-  // eslint-disable-next-line no-underscore-dangle
-  const desc = cutDescription(hit._highlightResult.description.value);
-  // eslint-disable-next-line no-underscore-dangle
-  const position = `result-${hit.__position}`;
-  return (
-    <OneResult
-      id={position}
-      url={getVocab(hit.objectID)}
-      title={hit.university}
-      desc={desc}
-      titleBold={`[${emoji.University} ${hit.objectID}]`}
-    ></OneResult>
-  );
-};
-
 const Search = () => {
   const router = useRouter();
   const [boxID, setBoxID] = useState('Q10159');
@@ -69,7 +51,12 @@ const Search = () => {
   return (
     <div id="base-div">
       <Main
-        meta={<Meta title="QS World Search Engine" description="QS World searching page" />}
+        meta={
+          <Meta
+            title="QS World Search Engine"
+            description="QS World searching page"
+          />
+        }
       >
         <InstantSearch searchClient={searchClient} indexName="universities">
           <div className="sticky z-[100] top-0 flex flex-col items-center content-center justify-center">
