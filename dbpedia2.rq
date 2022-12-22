@@ -1,0 +1,25 @@
+prefix wd: <http://www.wikidata.org/entity/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+
+SELECT DISTINCT ?ident ?established ?rector ?motto ?colorCode WHERE {
+  VALUES ?wd{ <http://www.wikidata.org/entity/Q534515> } .
+  ?ident owl:sameAs ?wd .
+  OPTIONAL {
+    ?ident dbp:established ?established .
+
+  }
+  OPTIONAL {
+    ?ident dbp:rector ?rector .
+
+  }
+  OPTIONAL {
+    ?ident dbp:motto ?motto .
+
+  }
+  OPTIONAL {
+    ?ident dbo:wikiPageWikiLink ?color .
+    ?color a dbo:Colour .
+    ?color dbo:wikiPageRedirects* ?redirected .
+    ?redirected dbo:colourHexCode ?colorCode .
+  }
+}

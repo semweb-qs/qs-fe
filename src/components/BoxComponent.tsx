@@ -1,4 +1,5 @@
 import { Card, CardBody, CardHeader } from '@material-tailwind/react';
+import { info } from 'autoprefixer';
 import N3 from 'n3';
 import { useEffect, useState } from 'react';
 import { SocialIcon } from 'react-social-icons';
@@ -150,7 +151,7 @@ export default function BoxComponent(props) {
       });
   };
 
-  const fillSocialMedia = (quads) => {
+  const fillExtraInfos = (quads) => {
     const fetcher = new ParsingClient({
       endpointUrl: AppConfig.sparql_wikidata,
     });
@@ -158,7 +159,7 @@ export default function BoxComponent(props) {
     fetcher.query
       .select(
         `
-         SELECT ?ident ?instagram ?facebook ?gmaps ?twitter WHERE {
+         SELECT DISTINCT ?ident ?instagram ?facebook ?gmaps ?twitter ?official WHERE {
             VALUES ?ident{<${getWikidataIfExist(quads, getVocab(boxID))}>}
             OPTIONAL {
               ?ident wdt:P2003 ?instagram .
@@ -172,6 +173,9 @@ export default function BoxComponent(props) {
             OPTIONAL {
               ?ident wdt:P2002 ?twitter .
             }
+            OPTIONAL {
+              ?ident wdt:P856 ?official .
+            }
           } 
         `
       )
@@ -184,6 +188,60 @@ export default function BoxComponent(props) {
           addInfoBox('instagram', socialMedia[0].instagram.value);
         if (socialMedia[0].gmaps)
           addInfoBox('gmaps', socialMedia[0].gmaps.value);
+        if (socialMedia[0].official)
+          addInfoBox('official', socialMedia[0].official.value);
+      });
+    const fetcher2 = new ParsingClient({
+      endpointUrl: AppConfig.sparql_dbpedia,
+    });
+    fetcher2.query
+      .select(
+        `
+         prefix wd: <http://www.wikidata.org/entity/>
+          PREFIX wikibase: <http://wikiba.se/ontology#>
+          
+          SELECT DISTINCT ?ident ?established ?rector ?motto ?colorName ?colorCode WHERE {
+            VALUES ?wd{ <${getWikidataIfExist(quads, getVocab(boxID))}> } .
+            ?ident owl:sameAs ?wd .
+            OPTIONAL {
+              ?ident dbp:established ?established .
+          
+            }
+            OPTIONAL {
+              ?ident dbp:rector ?rector .
+          
+            }
+            OPTIONAL {
+              ?ident dbp:motto ?motto .
+          
+            }
+            OPTIONAL {
+              ?ident dbo:wikiPageWikiLink ?color .
+              ?color a dbo:Colour .
+              ?color dbo:wikiPageRedirects* ?redirected .
+              ?redirected rdfs:label ?colorName .
+              ?redirected dbo:colourHexCode ?colorCode .
+              
+              FILTER (lang(?colorName)="en")
+            }
+          }
+            `
+      )
+      .then((infos) => {
+        if (infos[0].established) {
+          addInfoBox('established', infos[0].established.value.slice(0, 4));
+        }
+        if (infos[0].colorCode) {
+          addInfoBox('colorCode', infos[0].colorCode.value);
+        }
+        if (infos[0].colorName) {
+          addInfoBox(
+            'colorName',
+            infos[0].colorName.value.replace(/\(.+\)/, '')
+          );
+        }
+        if (infos[0].motto) addInfoBox('motto', infos[0].motto.value);
+        if (infos[0].rector) addInfoBox('rector', infos[0].rector.value);
       });
   };
 
@@ -247,7 +305,7 @@ export default function BoxComponent(props) {
           }
         }
         fillImage(store);
-        fillSocialMedia(store);
+        fillExtraInfos(store);
       });
   }, [boxID]);
   return boxID !== '' ? (
@@ -286,7 +344,92 @@ export default function BoxComponent(props) {
           <div className="text-sm">
             {infoBox.type === '' ? type : infoBox.type}
           </div>
+          <div className={'text-sm mb-3'}>
+            {
+              // @ts-ignore
+              infoBox.motto && (
+                <div>
+                  🎓{' '}
+                  <strong className={'text-base italic'}>
+                    {
+                      // @ts-ignore
+                      infoBox.motto
+                    }
+                  </strong>
+                </div>
+              )
+            }
+            {
+              // @ts-ignore
+              infoBox.established && (
+                <div>
+                  🛠 Established in{' '}
+                  <strong>
+                    {
+                      // @ts-ignore
+                      infoBox.established
+                    }
+                  </strong>
+                </div>
+              )
+            }
+            {
+              // @ts-ignore
+              infoBox.rector && (
+                <div>
+                  💪 Lead by{' '}
+                  <strong>
+                    {
+                      // @ts-ignore
+                      infoBox.rector
+                    }
+                  </strong>
+                </div>
+              )
+            }
+            {
+              // @ts-ignore
+              infoBox.colorName && (
+                <div>
+                  🏳 Official color is{' '}
+                  <div
+                    className={'inline p-1 rounded-lg'}
+                    style={
+                      // @ts-ignore
+                      { backgroundColor: `#${infoBox.colorCode}` }
+                    }
+                  >
+                    <strong
+                      style={
+                        // @ts-ignore
+                        { color: `#${infoBox.colorCode}` }
+                      }
+                      className={'invert drop-shadow-2xl'}
+                    >
+                      {
+                        // @ts-ignore
+                        infoBox.colorName
+                      }
+                    </strong>
+                  </div>
+                </div>
+              )
+            }
+          </div>
+
           <div className={'flex flex-row gap-2'}>
+            {
+              // @ts-ignore
+              infoBox.official && (
+                <SocialIcon
+                  style={{ height: 25, width: 25 }}
+                  url={
+                    // @ts-ignore
+                    `${infoBox.official}`
+                  }
+                />
+              )
+            }
             {
               // @ts-ignore
               infoBox.twitter && (
