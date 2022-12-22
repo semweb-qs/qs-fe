@@ -204,7 +204,6 @@ export default function BoxComponent(props) {
             ?ident owl:sameAs ?wd .
             OPTIONAL {
               ?ident dbp:established ?established .
-          
             }
             OPTIONAL {
               ?ident dbp:rector ?rector .
@@ -229,7 +228,8 @@ export default function BoxComponent(props) {
       )
       .then((infos) => {
         if (infos[0].established) {
-          addInfoBox('established', infos[0].established.value.slice(0, 4));
+          const tmp = infos[0].established.value.toString();
+          addInfoBox('established', tmp.replace(/\D/g, '').slice(0, 4));
         }
         if (infos[0].colorCode) {
           addInfoBox('colorCode', infos[0].colorCode.value);
