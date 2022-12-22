@@ -1,5 +1,4 @@
 import { Card, CardBody, CardHeader } from '@material-tailwind/react';
-import { info } from 'autoprefixer';
 import N3 from 'n3';
 import { useEffect, useState } from 'react';
 import { SocialIcon } from 'react-social-icons';
