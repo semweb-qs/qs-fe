@@ -31,6 +31,7 @@
     "react-dom": "^18.2.0",
     "react-instantsearch-dom": "^6.38.1",
     "react-instantsearch-hooks-web": "^6.38.1",
+    "react-social-icons": "^5.15.0",
     "react-tsparticles": "^2.6.0",
     "sanitize-html": "^2.7.3",
     "sparql-http-client": "^2.4.1",

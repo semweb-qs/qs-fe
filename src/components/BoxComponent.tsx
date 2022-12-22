@@ -1,6 +1,7 @@
 import { Card, CardBody, CardHeader } from '@material-tailwind/react';
 import N3 from 'n3';
 import { useEffect, useState } from 'react';
+import { SocialIcon } from 'react-social-icons';
 import ParsingClient from 'sparql-http-client/ParsingClient';
 
 import { AppConfig } from '@/utils/AppConfig';
@@ -149,6 +150,43 @@ export default function BoxComponent(props) {
       });
   };
 
+  const fillSocialMedia = (quads) => {
+    const fetcher = new ParsingClient({
+      endpointUrl: AppConfig.sparql_wikidata,
+    });
+    const store = new N3.Store();
+    fetcher.query
+      .select(
+        `
+         SELECT ?ident ?instagram ?facebook ?gmaps ?twitter WHERE {
+            VALUES ?ident{<${getWikidataIfExist(quads, getVocab(boxID))}>}
+            OPTIONAL {
+              ?ident wdt:P2003 ?instagram .
+            }
+            OPTIONAL {
+              ?ident wdt:P2013 ?facebook .
+            }
+            OPTIONAL {
+              ?ident wdt:P3749 ?gmaps .
+            }
+            OPTIONAL {
+              ?ident wdt:P2002 ?twitter .
+            }
+          } 
+        `
+      )
+      .then((socialMedia) => {
+        if (socialMedia[0].twitter)
+          addInfoBox('twitter', socialMedia[0].twitter.value);
+        if (socialMedia[0].facebook)
+          addInfoBox('facebook', socialMedia[0].facebook.value);
+        if (socialMedia[0].instagram)
+          addInfoBox('instagram', socialMedia[0].instagram.value);
+        if (socialMedia[0].gmaps)
+          addInfoBox('gmaps', socialMedia[0].gmaps.value);
+      });
+  };
+
   useEffect(() => {
     if (!boxID) return;
     setInfoBox(initialInfoBox);
@@ -209,6 +247,7 @@ export default function BoxComponent(props) {
           }
         }
         fillImage(store);
+        fillSocialMedia(store);
       });
   }, [boxID]);
   return boxID !== '' ? (
@@ -246,6 +285,56 @@ export default function BoxComponent(props) {
           </div>
           <div className="text-sm">
             {infoBox.type === '' ? type : infoBox.type}
+          </div>
+          <div className={'flex flex-row gap-2'}>
+            {
+              // @ts-ignore
+              infoBox.twitter && (
+                <SocialIcon
+                  style={{ height: 25, width: 25 }}
+                  url={
+                    // @ts-ignore
+                    `https://twitter.com/${infoBox.twitter}`
+                  }
+                />
+              )
+            }
+            {
+              // @ts-ignore
+              infoBox.facebook && (
+                <SocialIcon
+                  style={{ height: 25, width: 25 }}
+                  url={
+                    // @ts-ignore
+                    `https://facebook.com/${infoBox.facebook}`
+                  }
+                />
+              )
+            }
+            {
+              // @ts-ignore
+              infoBox.gmaps && (
+                <SocialIcon
+                  style={{ height: 25, width: 25 }}
+                  url={
+                    // @ts-ignore
+                    `https://www.google.com/maps?cid=${infoBox.gmaps}`
+                  }
+                />
+              )
+            }
+            {
+              // @ts-ignore
+              infoBox.instagram && (
+                <SocialIcon
+                  style={{ height: 25, width: 25 }}
+                  url={
+                    // @ts-ignore
+                    `https://www.instagram.com/${infoBox.instagram}`
+                  }
+                />
+              )
+            }
           </div>
         </div>
       </CardHeader>
