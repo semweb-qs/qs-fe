@@ -213,6 +213,7 @@ export default function BoxComponent(props) {
             OPTIONAL {
               ?ident dbp:motto ?motto .
           
+              FILTER (lang(?motto)="en")
             }
             OPTIONAL {
               ?ident dbo:wikiPageWikiLink ?color .
@@ -241,7 +242,8 @@ export default function BoxComponent(props) {
         }
         if (infos[0].motto) addInfoBox('motto', infos[0].motto.value);
         if (infos[0].rector) addInfoBox('rector', infos[0].rector.value);
-        if (infos[0].rectorLabel) addInfoBox('rector', infos[0].rectorLabel.value);
+        if (infos[0].rectorLabel)
+          addInfoBox('rector', infos[0].rectorLabel.value);
       });
   };
 
