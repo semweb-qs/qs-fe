@@ -199,7 +199,7 @@ export default function BoxComponent(props) {
          prefix wd: <http://www.wikidata.org/entity/>
           PREFIX wikibase: <http://wikiba.se/ontology#>
           
-          SELECT DISTINCT ?ident ?established ?rector ?motto ?colorName ?colorCode WHERE {
+          SELECT DISTINCT ?ident ?established ?rector ?rectorLabel ?motto ?colorName ?colorCode WHERE {
             VALUES ?wd{ <${getWikidataIfExist(quads, getVocab(boxID))}> } .
             ?ident owl:sameAs ?wd .
             OPTIONAL {
@@ -208,7 +208,7 @@ export default function BoxComponent(props) {
             }
             OPTIONAL {
               ?ident dbp:rector ?rector .
-          
+              OPTIONAL { ?rector rdfs:label ?rectorLabel . }
             }
             OPTIONAL {
               ?ident dbp:motto ?motto .
@@ -241,6 +241,7 @@ export default function BoxComponent(props) {
         }
         if (infos[0].motto) addInfoBox('motto', infos[0].motto.value);
         if (infos[0].rector) addInfoBox('rector', infos[0].rector.value);
+        if (infos[0].rectorLabel) addInfoBox('rector', infos[0].rectorLabel.value);
       });
   };
 
