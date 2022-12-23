@@ -20,7 +20,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
     apiKey: 'DCQ02OBoCcUazHCjlFmHRGXn6veorMJy',
     nodes: [
       {
-        host: 'searchqs.smuada.com',
+        host: 'searchqs.hocky.id',
         port: 443,
         protocol: 'https',
       },
